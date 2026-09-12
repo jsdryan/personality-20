@@ -12,7 +12,6 @@
 :root{
   --bg:#F3F5F2; --surface:#FFFFFF; --ink:#1C2321; --muted:#5E6A66; --line:#D5DBD8; --track:#E3E8E5;
   --accent:#1F5F5B; --accent-ink:#FFFFFF; --accent-soft:#E1EEEC;
-  --accent2:#8A4B5E; --accent2-soft:#F1E3E7;
   --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
   --sans:"Noto Sans TC","Microsoft JhengHei","PingFang TC",system-ui,sans-serif;
 }
@@ -20,13 +19,11 @@
   :root:not([data-theme="light"]){
     --bg:#141A18; --surface:#1D2523; --ink:#E8ECEA; --muted:#9AA6A1; --line:#2E3835; --track:#2A3431;
     --accent:#6FC2B9; --accent-ink:#0F1F1D; --accent-soft:#1F3532;
-    --accent2:#D48CA2; --accent2-soft:#3A2630;
   }
 }
 :root[data-theme="dark"]{
   --bg:#141A18; --surface:#1D2523; --ink:#E8ECEA; --muted:#9AA6A1; --line:#2E3835; --track:#2A3431;
   --accent:#6FC2B9; --accent-ink:#0F1F1D; --accent-soft:#1F3532;
-  --accent2:#D48CA2; --accent2-soft:#3A2630;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -83,19 +80,10 @@ td.c{white-space:nowrap}
 .trait-name{font-weight:500}
 .trait-name small{color:var(--muted);font-weight:400;margin-left:6px;font-size:.8rem}
 .trait-pct{font-variant-numeric:tabular-nums;font-weight:700;color:var(--accent)}
-.trait-pct .cmp{display:none;color:var(--accent2);font-weight:500;margin-left:8px}
 .track{grid-column:1 / -1;position:relative;height:10px;background:var(--track);border-radius:999px;overflow:hidden}
 .track .fill{position:absolute;inset:0 auto 0 0;background:var(--accent);border-radius:999px}
-.track .fill.cmp{display:none;background:var(--accent2);opacity:.85;height:4px;top:auto;bottom:0}
 .track .mid{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--surface)}
 .trait-desc{grid-column:1 / -1;font-size:.93rem;color:var(--muted)}
-.result.compare .trait-pct .cmp,.result.compare .track .fill.cmp{display:inline}
-.result.compare .track .fill.cmp{display:block}
-.legend{display:none;gap:16px;font-size:.85rem;color:var(--muted);flex-wrap:wrap}
-.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:6px}
-.result.compare .legend{display:flex}
-.cmp-note{display:none;padding:14px 16px;border-radius:12px;background:var(--accent2-soft);color:var(--ink);font-size:.95rem}
-.result.compare .cmp-note{display:block}
 
 .obs{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
 .obs li{padding:14px 16px;border-left:3px solid var(--accent);background:var(--surface);border-radius:0 12px 12px 0;font-size:.95rem}
@@ -202,7 +190,6 @@ details table{margin-bottom:12px}
        lv:['情緒起伏較大。容易擔心，被批評後會反芻。','中間型。事前會想，但當下多半冷靜。','情緒穩定。不太擔心，遇事冷靜，很快放下。']}
   };
   var ORDER = ['E','O','C','A','N'];
-  var JUSTIN = {name:'Justin', pct:{E:8,O:42,C:67,A:50,N:50}, letters:{E:'I',O:'S',A:'T',C:'J',N:'T'}};
 
   var KEY = 'p20-state-v1';
   var state = {name:'', answers:[], idx:0, done:false};
@@ -334,17 +321,15 @@ details table{margin-bottom:12px}
     });
     html += '</table></div>';
 
-    html += '<h2>五大特質</h2><div class="legend"><span><i style="background:var(--accent)"></i>' + who + '</span><span><i style="background:var(--accent2)"></i>' + JUSTIN.name + '</span></div><div class="traits">';
+    html += '<h2>五大特質</h2><div class="traits">';
     ORDER.forEach(function(tr){
-      var T = TRAITS[tr], p = shownPct(tr, r.pct[tr]), jp = shownPct(tr, JUSTIN.pct[tr]);
+      var T = TRAITS[tr], p = shownPct(tr, r.pct[tr]);
       html += '<div class="trait"><span class="trait-name">' + T.name + '<small>' + T.en + '</small></span>' +
-        '<span class="trait-pct">' + p + '%<span class="cmp">' + jp + '%</span></span>' +
-        '<div class="track"><div class="fill" style="width:' + p + '%"></div><div class="fill cmp" style="width:' + jp + '%"></div><div class="mid"></div></div>' +
+        '<span class="trait-pct">' + p + '%</span>' +
+        '<div class="track"><div class="fill" style="width:' + p + '%"></div><div class="mid"></div></div>' +
         '<p class="trait-desc">' + T.lv[level(p)] + '</p></div>';
     });
     html += '</div><p class="note">0% 為最低、100% 為最高、中間的細線是 50%。每項只有 4 題，上下 15% 都在正常誤差內；落在 40% 到 60% 的項目，換個心情再測可能翻面。</p>';
-
-    html += '<div class="cmp-note" id="cmp-note"></div>';
 
     html += '<h2>' + who + ' 答案裡的內在拉扯</h2>';
     if (r.obs.length) {
@@ -361,7 +346,6 @@ details table{margin-bottom:12px}
 
     html += '<div class="actions">' +
       '<button class="btn primary" type="button" id="copy">複製結果</button>' +
-      '<button class="btn" type="button" id="cmp" aria-pressed="false">和 ' + JUSTIN.name + ' 比較</button>' +
       '<button class="btn ghost" type="button" id="redo">重新測驗</button></div>';
 
     html += '<details><summary>作答紀錄</summary><table><tr><th>#</th><th>題目</th><th>作答</th></tr>';
@@ -379,31 +363,9 @@ details table{margin-bottom:12px}
     $('copy').addEventListener('click', function(){ copyText(buildCopy(r)); });
     $('redo').addEventListener('click', function(){
       state = {name: state.name, answers: [], idx: 0, done: false}; save();
-      resultEl.classList.remove('compare'); resultEl.hidden = true; introEl.hidden = false; quizEl.hidden = false; renderQuiz();
+      resultEl.hidden = true; introEl.hidden = false; quizEl.hidden = false; renderQuiz();
       window.scrollTo({top:0, behavior:'smooth'});
     });
-    $('cmp').addEventListener('click', function(){
-      var on = resultEl.classList.toggle('compare');
-      this.setAttribute('aria-pressed', String(on));
-      if (on) renderCompare(r);
-    });
-  }
-
-  function renderCompare(r){
-    var same = [], diff = [];
-    ['E','O','A','C'].forEach(function(tr){
-      var T = TRAITS[tr];
-      if (r.letters[tr] === JUSTIN.letters[tr]) same.push(r.letters[tr]);
-      else diff.push(T.q + '：' + (state.name || '你') + ' 是 ' + r.letters[tr] + '，' + JUSTIN.name + ' 是 ' + JUSTIN.letters[tr]);
-    });
-    var jType = JUSTIN.letters.E + JUSTIN.letters.O + JUSTIN.letters.A + JUSTIN.letters.C;
-    var t = '<b>' + (state.name ? esc(state.name) : '你') + ' ' + r.type + '，' + JUSTIN.name + ' ' + jType + '。</b> ';
-    if (same.length) t += '相同的字母：' + same.join('、') + '。';
-    if (diff.length) t += '不同的地方：' + diff.join('；') + '。';
-    else t += '四個字母完全相同，差別只在每一項的深淺。';
-    var gaps = ORDER.map(function(tr){ return {tr:tr, g:Math.abs(shownPct(tr, r.pct[tr]) - shownPct(tr, JUSTIN.pct[tr]))}; }).sort(function(a,b){ return b.g - a.g; });
-    if (gaps[0].g >= 25) t += ' 分數差最多的是' + TRAITS[gaps[0].tr].name + '，相差 ' + gaps[0].g + ' 個百分點。';
-    $('cmp-note').innerHTML = t;
   }
 
   function buildCopy(r){
