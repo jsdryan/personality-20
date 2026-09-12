@@ -213,7 +213,8 @@ details table{margin-bottom:12px}
     $('p-text').textContent = '第 ' + (i+1) + ' 題 / ' + ITEMS.length;
     $('p-done').textContent = answered ? '已答 ' + answered + ' 題' : '';
     $('p-fill').style.width = Math.round(answered / ITEMS.length * 100) + '%';
-    $('statement').textContent = '「' + item.t.replace(/。$/, '') + '」';
+    // 外層已用「」包住整句，句中原本的「」改為『』
+    $('statement').textContent = '「' + item.t.replace(/「/g, '『').replace(/」/g, '』') + '」';
     var html = '';
     CHOICES.forEach(function(c){
       html += '<li><button type="button" class="opt" data-v="' + c.v + '" aria-pressed="' + (v===c.v) + '">' +
