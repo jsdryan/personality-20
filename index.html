@@ -213,7 +213,7 @@ details table{margin-bottom:12px}
     $('p-text').textContent = '第 ' + (i+1) + ' 題 / ' + ITEMS.length;
     $('p-done').textContent = answered ? '已答 ' + answered + ' 題' : '';
     $('p-fill').style.width = Math.round(answered / ITEMS.length * 100) + '%';
-    $('statement').textContent = '「' + item.t + '」';
+    $('statement').textContent = '「' + item.t.replace(/。$/, '') + '」';
     var html = '';
     CHOICES.forEach(function(c){
       html += '<li><button type="button" class="opt" data-v="' + c.v + '" aria-pressed="' + (v===c.v) + '">' +
@@ -247,12 +247,13 @@ details table{margin-bottom:12px}
   $('opts').addEventListener('click', function(e){
     var b = e.target.closest('.opt'); if (b) choose(Number(b.getAttribute('data-v')));
   });
-  $('next').addEventListener('click', goNext);
-  $('prev').addEventListener('click', goPrev);
+  $('next').addEventListener('click', function(){ this.blur(); goNext(); });
+  $('prev').addEventListener('click', function(){ this.blur(); goPrev(); });
   document.addEventListener('keydown', function(e){
-    if (quizEl.hidden || e.target === nameEl) return;
-    if (e.key >= '1' && e.key <= '4') choose(Number(e.key));
-    else if (e.key === 'ArrowLeft') goPrev();
+    if (quizEl.hidden || e.target.closest('input, textarea, select')) return;
+    if (e.key >= '1' && e.key <= '4') { choose(Number(e.key)); return; }
+    if (e.target.closest('button, a, summary')) return; // 焦點在按鈕上時，Enter／空白鍵交給按鈕本身處理
+    if (e.key === 'ArrowLeft') goPrev();
     else if (e.key === 'ArrowRight' || e.key === 'Enter') goNext();
   });
 
@@ -376,7 +377,7 @@ details table{margin-bottom:12px}
     lines.push(['E','O','A','C','N'].map(function(tr){ return (tr === 'N' ? '-' : '') + r.letters[tr] + ' ' + r.conf[tr]; }).join('／'));
     r.obs.forEach(function(o){
       var label = o.tr === 'N' ? '情緒' : TRAITS[o.tr].name;
-      lines.push('拉扯・' + label + '：' + o.hiSide.join('、') + '，但同時' + o.loSide.join('、'));
+      lines.push('拉扯（' + label + '）：' + o.hiSide.join('、') + '，但同時' + o.loSide.join('、'));
     });
     return lines.join('\n');
   }
