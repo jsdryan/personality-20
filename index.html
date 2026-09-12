@@ -12,6 +12,8 @@
 :root{
   --bg:#F3F5F2; --surface:#FFFFFF; --ink:#1C2321; --muted:#5E6A66; --line:#D5DBD8; --track:#E3E8E5;
   --accent:#1F5F5B; --accent-ink:#FFFFFF; --accent-soft:#E1EEEC;
+  --accent2:#8A4B5E; --accent2-soft:#F1E3E7;
+  --warn-soft:#F5EEDB; --warn:#7A5A12;
   --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
   --sans:"Noto Sans TC","Microsoft JhengHei","PingFang TC",system-ui,sans-serif;
 }
@@ -19,83 +21,114 @@
   :root:not([data-theme="light"]){
     --bg:#141A18; --surface:#1D2523; --ink:#E8ECEA; --muted:#9AA6A1; --line:#2E3835; --track:#2A3431;
     --accent:#6FC2B9; --accent-ink:#0F1F1D; --accent-soft:#1F3532;
+    --accent2:#D48CA2; --accent2-soft:#3A2630;
+    --warn-soft:#3A3220; --warn:#E5C36A;
   }
 }
 :root[data-theme="dark"]{
   --bg:#141A18; --surface:#1D2523; --ink:#E8ECEA; --muted:#9AA6A1; --line:#2E3835; --track:#2A3431;
   --accent:#6FC2B9; --accent-ink:#0F1F1D; --accent-soft:#1F3532;
+  --accent2:#D48CA2; --accent2-soft:#3A2630;
+  --warn-soft:#3A3220; --warn:#E5C36A;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;padding-inline:16px;padding-block:28px 64px}
-.wrap{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;padding-inline:16px;padding-block:24px 64px}
+.wrap{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
 h1,h2,h3{margin:0;font-family:var(--serif);font-weight:700;text-wrap:balance;line-height:1.3}
 h1{font-size:2rem;letter-spacing:.02em}
-h2{font-size:1.25rem;margin-top:8px}
+h2{font-size:1.25rem;margin-top:6px}
+h3{font-size:1.05rem}
 p{margin:0}
+ul,ol{margin:0;padding-left:1.2em}
 .eyebrow{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500}
 .muted{color:var(--muted)}
-.brand{display:flex;flex-direction:column;gap:6px}
-.lede{font-size:1rem;color:var(--muted);max-width:34em}
-.intro{display:flex;flex-direction:column;gap:14px;padding:18px 20px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
-.intro ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:4px}
+.small{font-size:.9rem}
+.note{font-size:.85rem;color:var(--muted)}
+.brand{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.brand .titles{display:flex;flex-direction:column;gap:4px;min-width:0}
+.brand .lede{font-size:.95rem;color:var(--muted);max-width:32em}
+.controls{display:flex;gap:6px;flex:0 0 auto}
+.chip{font:inherit;font-size:.8rem;font-weight:500;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:4px 10px;cursor:pointer}
+.chip[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.view{display:flex;flex-direction:column;gap:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.notice{padding:12px 14px;border-radius:12px;background:var(--accent-soft);color:var(--ink);font-size:.93rem}
+.notice.warn{background:var(--warn-soft);color:var(--warn)}
 .field{display:flex;flex-direction:column;gap:6px}
 .field label{font-size:.9rem;font-weight:500}
-.field input{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
-.field input:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.field input[type=text],.field input[type=url]{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;min-width:0}
+.field.inline{flex-direction:row;align-items:stretch;gap:8px}
+.field.inline .btn{white-space:nowrap;flex:0 0 auto}
+.check{display:flex;align-items:center;gap:8px;font-size:.93rem}
+.check input{width:18px;height:18px;accent-color:var(--accent)}
+input:focus-visible,button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{font:inherit;font-weight:500;border-radius:10px;padding:10px 16px;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;display:inline-block}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.ghost{border-color:transparent;color:var(--muted)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.sm{padding:6px 12px;font-size:.88rem}
 
 .progress{display:flex;flex-direction:column;gap:8px}
 .progress-row{display:flex;justify-content:space-between;font-size:.9rem;color:var(--muted);font-variant-numeric:tabular-nums}
 .bar{height:6px;background:var(--track);border-radius:999px;overflow:hidden}
 .bar > i{display:block;height:100%;background:var(--accent);border-radius:999px;transition:width .25s ease}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 20px;display:flex;flex-direction:column;gap:18px}
 .statement{font-family:var(--serif);font-size:1.3rem;line-height:1.55;font-weight:600}
 .opts{display:grid;gap:10px;margin:0;padding:0;list-style:none}
 .opt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 14px;cursor:pointer;transition:border-color .15s,background .15s}
-.opt:hover{border-color:var(--accent)}
+@media (hover:hover){.opt:hover{border-color:var(--accent)}}
 .opt .k{flex:0 0 auto;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:.8rem;font-weight:700;background:var(--track);color:var(--muted);font-variant-numeric:tabular-nums}
 .opt .t{display:flex;flex-direction:column;line-height:1.35}
 .opt .t small{color:var(--muted);font-size:.8rem}
 .opt[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
 .opt[aria-pressed="true"] .k{background:var(--accent);color:var(--accent-ink)}
 .nav{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.btn{font:inherit;font-weight:500;border-radius:10px;padding:10px 16px;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
-.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-.btn.ghost{border-color:transparent;color:var(--muted)}
 
 .type-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 20px;display:flex;flex-direction:column;gap:14px}
 .type-letters{font-family:var(--serif);font-size:3.4rem;font-weight:700;letter-spacing:.08em;line-height:1.1;color:var(--accent)}
 .type-letters .identity{font-size:1.6rem;letter-spacing:.02em;color:var(--muted);margin-left:.15em}
+.type-letters.b{color:var(--accent2)}
 table{border-collapse:collapse;width:100%;font-size:.93rem}
 th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-weight:500;color:var(--muted);font-size:.8rem;letter-spacing:.06em}
 td.l{font-family:var(--serif);font-weight:700;font-size:1.05rem;white-space:nowrap}
-td.c{white-space:nowrap}
-.pill{display:inline-block;padding:1px 8px;border-radius:999px;font-size:.78rem;background:var(--accent-soft);color:var(--accent);font-weight:500}
+td.c,th.c{white-space:nowrap}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl{overflow-x:auto}
+.pill{display:inline-block;padding:1px 8px;border-radius:999px;font-size:.78rem;background:var(--accent-soft);color:var(--accent);font-weight:500;white-space:nowrap}
 .pill.mid{background:var(--track);color:var(--muted)}
+.pill.b{background:var(--accent2-soft);color:var(--accent2)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
 
 .traits{display:flex;flex-direction:column;gap:14px}
 .trait{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:baseline}
 .trait-name{font-weight:500}
 .trait-name small{color:var(--muted);font-weight:400;margin-left:6px;font-size:.8rem}
 .trait-pct{font-variant-numeric:tabular-nums;font-weight:700;color:var(--accent)}
+.trait-pct .b{color:var(--accent2);font-weight:500;margin-left:8px}
 .track{grid-column:1 / -1;position:relative;height:10px;background:var(--track);border-radius:999px;overflow:hidden}
 .track .fill{position:absolute;inset:0 auto 0 0;background:var(--accent);border-radius:999px}
+.track .fill.b{background:var(--accent2);opacity:.9;height:4px;top:auto;bottom:0}
 .track .mid{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--surface)}
 .trait-desc{grid-column:1 / -1;font-size:.93rem;color:var(--muted)}
+.legend{display:flex;gap:16px;font-size:.85rem;color:var(--muted);flex-wrap:wrap}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:6px}
 
 .obs{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
 .obs li{padding:14px 16px;border-left:3px solid var(--accent);background:var(--surface);border-radius:0 12px 12px 0;font-size:.95rem}
 .obs li b{font-family:var(--serif)}
+.obs li.b{border-left-color:var(--accent2)}
 .actions{display:flex;flex-wrap:wrap;gap:10px}
 details{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:0 16px}
 summary{cursor:pointer;padding:12px 0;font-weight:500}
-details table{margin-bottom:12px}
-.note{font-size:.85rem;color:var(--muted)}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:999px;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .2s}
+details > :last-child{margin-bottom:12px}
+.miss{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+.miss li{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:.92rem}
+.miss li .vs{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;font-size:.85rem}
+.cardimg img{width:100%;height:auto;border-radius:12px;border:1px solid var(--line);display:block}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:999px;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw;text-align:center}
 .toast.show{opacity:1}
-.result{display:flex;flex-direction:column;gap:22px}
 [hidden]{display:none!important}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
@@ -104,303 +137,587 @@ details table{margin-bottom:12px}
 
 <div class="wrap">
   <header class="brand">
-    <div class="eyebrow">五大人格 · 二十題情境版</div>
-    <h1>人格二十題</h1>
-    <p class="lede">用二十個生活情境，判斷「像不像我」，就能得到五大人格特質分數，以及對應的四個字母。</p>
+    <div class="titles">
+      <div class="eyebrow" id="h-eyebrow"></div>
+      <h1 id="h-title"></h1>
+      <p class="lede" id="h-lede"></p>
+    </div>
+    <div class="controls">
+      <button class="chip" type="button" id="lang-btn"></button>
+      <button class="chip" type="button" id="theme-btn"></button>
+    </div>
   </header>
-
-  <section class="intro" id="intro">
-    <ul>
-      <li>每題只要憑直覺選「像不像我」，沒有對錯。</li>
-      <li>大約三分鐘。中途離開，下次打開會接著作答。</li>
-      <li>結果會給五項特質的分數、四個字母的把握程度，還有你答案裡的內在拉扯。</li>
-    </ul>
-    <div class="field">
-      <label for="name">你的名字（選填，會出現在結果上）</label>
-      <input id="name" type="text" maxlength="20" autocomplete="off" placeholder="例如：小美">
-    </div>
-  </section>
-
-  <section id="quiz" class="quiz">
-    <div class="progress">
-      <div class="progress-row"><span id="p-text">第 1 題 / 20</span><span id="p-done"></span></div>
-      <div class="bar"><i id="p-fill" style="width:0%"></i></div>
-    </div>
-    <div class="card" style="margin-top:14px">
-      <div class="eyebrow">這句話像你嗎？</div>
-      <p class="statement" id="statement"></p>
-      <ul class="opts" id="opts"></ul>
-      <div class="nav">
-        <button class="btn ghost" id="prev" type="button">上一題</button>
-        <button class="btn primary" id="next" type="button" disabled>下一題</button>
-      </div>
-    </div>
-  </section>
-
-  <section id="result" class="result" hidden></section>
+  <main id="app" class="view"></main>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 (function(){
   'use strict';
+
+  /* ============================== 資料 ============================== */
   var ITEMS = [
-    {t:'週五晚上，比起在家安靜休息，我更想找朋友出去聚。', tr:'E', k:1,  a:'週五想找朋友聚', d:'週五寧願在家休息'},
-    {t:'我喜歡嘗試沒吃過的料理、沒去過的地方、沒聽過的音樂。', tr:'O', k:1,  a:'喜歡嘗鮮', d:'不太愛嘗鮮'},
-    {t:'出門或開始做事前，我會先列清單或在腦中排好順序，很少想到什麼做什麼。', tr:'C', k:1, a:'做事前會先排好順序', d:'常常想到什麼做什麼'},
-    {t:'朋友心情不好時，我很容易跟著感受到他的情緒。', tr:'A', k:1,  a:'容易被朋友的情緒感染', d:'不太被別人的情緒帶走'},
-    {t:'事情還沒發生，我就常常先想到最壞的情況。', tr:'N', k:1,  a:'事前會先想最壞情況', d:'不太預想壞結果'},
-    {t:'在聚會裡，我通常是先開口和陌生人聊天的那個人。', tr:'E', k:1,  a:'會主動和陌生人開口', d:'不主動和陌生人搭話'},
-    {t:'我常會為了搞懂「這個東西到底怎麼運作」而查資料查到忘記時間。', tr:'O', k:1, a:'會為了搞懂原理查到忘記時間', d:'對原理沒那麼追根究柢'},
-    {t:'交代給我的事，我通常會提前完成，而不是拖到最後一刻。', tr:'C', k:1, a:'會提前完成', d:'常拖到最後一刻'},
-    {t:'做決定時，我會很在意這個決定會不會讓別人不舒服。', tr:'A', k:1,  a:'很在意決定會不會讓人不舒服', d:'決定時不太顧慮別人的感受'},
-    {t:'被人批評後，我會反覆想好幾天。', tr:'N', k:1,  a:'被批評後會想好幾天', d:'被批評後很快放下'},
-    {t:'跟一群人相處一整天後，我需要獨處一段時間才能恢復精神。', tr:'E', k:-1, a:'社交後需要獨處恢復', d:'社交後不需要特別恢復'},
-    {t:'我偏好熟悉、有把握的做法，不太想換新的方式。', tr:'O', k:-1, a:'偏好熟悉的做法', d:'願意換新的做法'},
-    {t:'我的桌面、房間或電腦檔案常常很亂，但我自己找得到就好。', tr:'C', k:-1, a:'環境亂也無所謂', d:'環境會保持整齊'},
-    {t:'討論時我會直接指出對方的邏輯錯誤，就算場面變得有點尷尬。', tr:'A', k:-1, a:'會直接指出別人的邏輯錯誤', d:'不會當面指出錯誤'},
-    {t:'遇到突發狀況時，我通常能保持冷靜，不太慌。', tr:'N', k:-1, a:'突發狀況能保持冷靜', d:'突發狀況容易慌'},
-    {t:'開會或上課時，我傾向安靜聽，不太主動發言。', tr:'E', k:-1, a:'開會傾向安靜聽', d:'開會會主動發言'},
-    {t:'談抽象的想法或理論會讓我覺得無聊，我比較在意實際能用的東西。', tr:'O', k:-1, a:'覺得抽象理論無聊', d:'喜歡談抽象的想法'},
-    {t:'計畫臨時被打亂時，我其實覺得無所謂，隨機應變就好。', tr:'C', k:-1, a:'計畫被打亂也無所謂', d:'討厭計畫被打亂'},
-    {t:'我覺得「對事不對人」比「顧慮大家感受」更重要。', tr:'A', k:-1, a:'對事不對人優先', d:'顧慮大家感受優先'},
-    {t:'我的心情大部分時間都蠻平穩的，很少大起大落。', tr:'N', k:-1, a:'心情平穩', d:'心情起伏大'}
+    {t:"週五晚上，比起在家安靜休息，我更想找朋友出去聚。", e:"On a Friday night, I'd rather go out with friends than stay home and rest.", tr:"E", k:1, a:"週五想找朋友聚", d:"週五寧願在家休息", ae:"wants to go out with friends on Fridays", de:"would rather stay home on Fridays"},
+    {t:"我喜歡嘗試沒吃過的料理、沒去過的地方、沒聽過的音樂。", e:"I like trying food I've never eaten, places I've never been, and music I've never heard.", tr:"O", k:1, a:"喜歡嘗鮮", d:"不太愛嘗鮮", ae:"loves trying new things", de:"not big on novelty"},
+    {t:"出門或開始做事前，我會先列清單或在腦中排好順序，很少想到什麼做什麼。", e:"Before going out or starting a task, I make a list or plan the order in my head; I rarely just wing it.", tr:"C", k:1, a:"做事前會先排好順序", d:"常常想到什麼做什麼", ae:"plans the order before starting", de:"tends to wing it"},
+    {t:"朋友心情不好時，我很容易跟著感受到他的情緒。", e:"When a friend is upset, I easily pick up their mood.", tr:"A", k:1, a:"容易被朋友的情緒感染", d:"不太被別人的情緒帶走", ae:"easily catches friends' moods", de:"not swept up by others' moods"},
+    {t:"事情還沒發生，我就常常先想到最壞的情況。", e:"Before something even happens, I often imagine the worst case.", tr:"N", k:1, a:"事前會先想最壞情況", d:"不太預想壞結果", ae:"imagines the worst beforehand", de:"doesn't pre-imagine bad outcomes"},
+    {t:"在聚會裡，我通常是先開口和陌生人聊天的那個人。", e:"At a gathering, I'm usually the one who starts talking to strangers first.", tr:"E", k:1, a:"會主動和陌生人開口", d:"不主動和陌生人搭話", ae:"starts conversations with strangers", de:"doesn't approach strangers"},
+    {t:"我常會為了搞懂「這個東西到底怎麼運作」而查資料查到忘記時間。", e:"I often lose track of time digging into how something actually works.", tr:"O", k:1, a:"會為了搞懂原理查到忘記時間", d:"對原理沒那麼追根究柢", ae:"loses track of time figuring out how things work", de:"not that driven to dig into how things work"},
+    {t:"交代給我的事，我通常會提前完成，而不是拖到最後一刻。", e:"I usually finish assigned tasks early instead of at the last minute.", tr:"C", k:1, a:"會提前完成", d:"常拖到最後一刻", ae:"finishes early", de:"tends to leave things to the last minute"},
+    {t:"做決定時，我會很在意這個決定會不會讓別人不舒服。", e:"When making decisions, I worry a lot about whether they will make someone uncomfortable.", tr:"A", k:1, a:"很在意決定會不會讓人不舒服", d:"決定時不太顧慮別人的感受", ae:"worries decisions might upset people", de:"doesn't weigh others' feelings much when deciding"},
+    {t:"被人批評後，我會反覆想好幾天。", e:"After being criticized, I replay it for days.", tr:"N", k:1, a:"被批評後會想好幾天", d:"被批評後很快放下", ae:"replays criticism for days", de:"lets criticism go quickly"},
+    {t:"跟一群人相處一整天後，我需要獨處一段時間才能恢復精神。", e:"After a full day with people, I need time alone to recover.", tr:"E", k:-1, a:"社交後需要獨處恢復", d:"社交後不需要特別恢復", ae:"needs alone time after socializing", de:"doesn't need to recover after socializing"},
+    {t:"我偏好熟悉、有把握的做法，不太想換新的方式。", e:"I prefer familiar, proven ways of doing things and don't really want to switch.", tr:"O", k:-1, a:"偏好熟悉的做法", d:"願意換新的做法", ae:"prefers familiar methods", de:"willing to switch to new methods"},
+    {t:"我的桌面、房間或電腦檔案常常很亂，但我自己找得到就好。", e:"My desk, room or computer files are often messy, but I can find things, so it's fine.", tr:"C", k:-1, a:"環境亂也無所謂", d:"環境會保持整齊", ae:"fine with a messy environment", de:"keeps things tidy"},
+    {t:"討論時我會直接指出對方的邏輯錯誤，就算場面變得有點尷尬。", e:"In a discussion I point out flaws in someone's logic directly, even if it gets awkward.", tr:"A", k:-1, a:"會直接指出別人的邏輯錯誤", d:"不會當面指出錯誤", ae:"points out logic flaws directly", de:"won't call out mistakes to someone's face"},
+    {t:"遇到突發狀況時，我通常能保持冷靜，不太慌。", e:"In an emergency I usually stay calm and don't panic.", tr:"N", k:-1, a:"突發狀況能保持冷靜", d:"突發狀況容易慌", ae:"stays calm in emergencies", de:"panics easily in emergencies"},
+    {t:"開會或上課時，我傾向安靜聽，不太主動發言。", e:"In meetings or classes I tend to listen quietly rather than speak up.", tr:"E", k:-1, a:"開會傾向安靜聽", d:"開會會主動發言", ae:"listens quietly in meetings", de:"speaks up in meetings"},
+    {t:"談抽象的想法或理論會讓我覺得無聊，我比較在意實際能用的東西。", e:"Abstract ideas and theories bore me; I care more about what's practical.", tr:"O", k:-1, a:"覺得抽象理論無聊", d:"喜歡談抽象的想法", ae:"finds abstract theory boring", de:"enjoys abstract ideas"},
+    {t:"計畫臨時被打亂時，我其實覺得無所謂，隨機應變就好。", e:"When plans get disrupted, I honestly don't mind; I just adapt.", tr:"C", k:-1, a:"計畫被打亂也無所謂", d:"討厭計畫被打亂", ae:"doesn't mind disrupted plans", de:"hates disrupted plans"},
+    {t:"我覺得「對事不對人」比「顧慮大家感受」更重要。", e:"I think focusing on the issue matters more than keeping everyone comfortable.", tr:"A", k:-1, a:"對事不對人優先", d:"顧慮大家感受優先", ae:"puts the issue before feelings", de:"puts feelings before the issue"},
+    {t:"我的心情大部分時間都蠻平穩的，很少大起大落。", e:"My mood is mostly steady, with few big ups and downs.", tr:"N", k:-1, a:"心情平穩", d:"心情起伏大", ae:"steady mood", de:"big mood swings"}
   ];
-  var CHOICES = [
-    {v:1, l:'完全不像我', s:'幾乎從來不會這樣'},
-    {v:2, l:'不太像我',   s:'偶爾會，但多數時候不是'},
-    {v:3, l:'有點像我',   s:'多數時候是這樣'},
-    {v:4, l:'非常像我',   s:'幾乎每次都這樣'}
-  ];
-  var TRAITS = {
-    E:{name:'外向性', en:'Extraversion', hi:'E', lo:'I', q:'能量從哪裡來',
-       hiM:'跟人互動會充電', loM:'靠獨處充電',
-       lv:['偏內向。靠獨處充電，社交後需要時間恢復。','中間型。看場合，有時想找人，有時想獨處。','偏外向。跟人互動會充電，樂於主動開口。']},
-    O:{name:'開放性', en:'Openness', hi:'N', lo:'S', q:'怎麼接收資訊',
-       hiM:'喜歡概念和可能性', loM:'相信經驗和事實',
-       lv:['偏務實。相信驗證過的做法，重視實際能用的東西。','中間型。有選擇地嘗新，熟悉和新奇各占一半。','偏探索。喜歡新奇、抽象和背後的意義。']},
-    C:{name:'盡責性', en:'Conscientiousness', hi:'J', lo:'P', q:'怎麼面對外在世界',
-       hiM:'喜歡事情有定案', loM:'喜歡保留彈性',
-       lv:['偏隨性。喜歡保留彈性，事情到最後再決定也沒關係。','中間型。有計畫但不僵硬，被打亂也能調整。','偏規劃。會事先安排、重視承諾，不喜歡計畫被打亂。']},
-    A:{name:'親和性', en:'Agreeableness', hi:'F', lo:'T', q:'怎麼做決定',
-       hiM:'決定時先看對人的影響', loM:'決定時先看邏輯',
-       lv:['偏邏輯。對事不對人，能接受講出來會有點不舒服的事實。','中間型。邏輯和感受輪流上場，視情況決定。','偏和諧。很在意別人的感受，決定時先看對人的影響。']},
-    N:{name:'情緒穩定度', en:'Emotional Stability', hi:'T', lo:'A', q:'身分（16personalities 附加）',
-       hiM:'動盪型：較敏感、會自我檢討', loM:'自信型：情緒穩定、不太自我懷疑',
-       lv:['情緒起伏較大。容易擔心，被批評後會反芻。','中間型。事前會想，但當下多半冷靜。','情緒穩定。不太擔心，遇事冷靜，很快放下。']}
+  var FOLLOW = {
+    E:[{t:"一整週都沒跟朋友聚，我會開始覺得悶。", e:"If a whole week goes by without seeing friends, I start to feel restless.", k:1},
+       {t:"朋友臨時約我出門，我心裡的第一反應是「有點負擔」多過「太好了」。", e:"When a friend invites me out on short notice, my first reaction is more \"a bit of a burden\" than \"great\".", k:-1},
+       {t:"在一群人裡，我比較喜歡當聽眾，而不是話題中心。", e:"In a group I'd rather be the listener than the center of attention.", k:-1}],
+    O:[{t:"討論時我常常先想「這背後的原則是什麼」，而不是「實際上要怎麼做」。", e:"In discussions I tend to think about the principle behind something before how to actually do it.", k:1},
+       {t:"買東西或選餐廳，我通常會回頭選用過、吃過的。", e:"When shopping or picking a restaurant, I usually go back to what I've already tried.", k:-1},
+       {t:"我喜歡想像「如果……會怎樣」的假設情境。", e:"I enjoy imagining what-if scenarios.", k:1}],
+    C:[{t:"旅行時我喜歡把行程先排好，而不是到了再看。", e:"When traveling I like the itinerary planned in advance rather than deciding on the spot.", k:1},
+       {t:"事情還沒定下來，我會覺得心裡不踏實。", e:"When things are still undecided, I feel unsettled.", k:1},
+       {t:"我常常同時開好幾件事，最後再一起收尾。", e:"I often have several things going at once and wrap them all up at the end.", k:-1}],
+    A:[{t:"朋友來找我訴苦，我的第一反應是幫他分析問題，而不是先安慰他。", e:"When a friend comes to vent, my first instinct is to analyze the problem rather than comfort them.", k:-1},
+       {t:"明知道對方會不高興，我還是會說出我認為對的話。", e:"Even knowing someone will be unhappy, I still say what I believe is right.", k:-1},
+       {t:"做決定時，「大家會不會舒服」比「這樣最有效率」更常影響我。", e:"When deciding, whether everyone will be comfortable sways me more often than what is most efficient.", k:1}],
+    N:[{t:"大事之前，我會睡不好或一直想。", e:"Before a big event, I sleep badly or keep thinking about it.", k:1},
+       {t:"別人隨口的一句評語，我可能會記很久。", e:"A casual remark from someone can stay with me for a long time.", k:1},
+       {t:"出了狀況我通常覺得「會有辦法的」，不太慌。", e:"When something goes wrong I usually feel it will work out and don't panic.", k:-1}]
   };
-  var ORDER = ['E','O','C','A','N'];
-
-  var KEY = 'p20-state-v1';
-  var state = {name:'', answers:[], idx:0, done:false};
-  try {
-    var saved = JSON.parse(localStorage.getItem(KEY) || 'null');
-    if (saved && Array.isArray(saved.answers)) state = saved;
-  } catch (e) {}
-  if (!Array.isArray(state.answers)) state.answers = [];
-  function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
-
-  var $ = function(id){ return document.getElementById(id); };
-  var nameEl = $('name'), quizEl = $('quiz'), resultEl = $('result'), introEl = $('intro');
-  nameEl.value = state.name || '';
-  nameEl.addEventListener('input', function(){ state.name = nameEl.value.trim(); save(); });
-
-  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
-
-  function renderQuiz(){
-    var i = state.idx, item = ITEMS[i], v = state.answers[i] || 0;
-    var answered = state.answers.filter(Boolean).length;
-    $('p-text').textContent = '第 ' + (i+1) + ' 題 / ' + ITEMS.length;
-    $('p-done').textContent = answered ? '已答 ' + answered + ' 題' : '';
-    $('p-fill').style.width = Math.round(answered / ITEMS.length * 100) + '%';
-    // 外層已用「」包住整句，句中原本的「」改為『』
-    $('statement').textContent = '「' + item.t.replace(/「/g, '『').replace(/」/g, '』') + '」';
-    var html = '';
-    CHOICES.forEach(function(c){
-      html += '<li><button type="button" class="opt" data-v="' + c.v + '" aria-pressed="' + (v===c.v) + '">' +
-              '<span class="k">' + c.v + '</span><span class="t"><span>' + c.l + '</span><small>' + c.s + '</small></span></button></li>';
-    });
-    $('opts').innerHTML = html;
-    $('prev').disabled = i === 0;
-    var next = $('next');
-    next.disabled = !v;
-    next.textContent = (i === ITEMS.length - 1) ? '看結果' : '下一題';
-  }
-
-  function choose(v){
-    state.answers[state.idx] = v;
-    save();
-    renderQuiz();
-    setTimeout(goNext, 220);
-  }
-  function goNext(){
-    if (!state.answers[state.idx]) return;
-    if (state.idx < ITEMS.length - 1) { state.idx++; save(); renderQuiz(); scrollToQuiz(); }
-    else if (state.answers.filter(Boolean).length === ITEMS.length) { state.done = true; save(); showResult(); }
-    else {
-      var first = state.answers.findIndex(function(a, k){ return k < ITEMS.length && !a; });
-      state.idx = first; save(); renderQuiz(); toast('還有題目沒作答，先補上這一題');
+  var ORDER = ["E","O","C","A","N"];
+  var TRAITS = {
+    E:{zh:"外向性", en:"Extraversion", hi:"E", lo:"I", q:{zh:"能量從哪裡來", en:"Where energy comes from"},
+       hiM:{zh:"跟人互動會充電", en:"recharges with people"}, loM:{zh:"靠獨處充電", en:"recharges alone"},
+       lv:{zh:["偏內向。靠獨處充電，社交後需要時間恢復。","中間型。看場合，有時想找人，有時想獨處。","偏外向。跟人互動會充電，樂於主動開口。"],
+           en:["Leans introverted. Recharges alone and needs recovery after socializing.","In the middle. Depends on the situation.","Leans extraverted. Recharges around people and speaks up readily."]}},
+    O:{zh:"開放性", en:"Openness", hi:"N", lo:"S", q:{zh:"怎麼接收資訊", en:"How information is taken in"},
+       hiM:{zh:"喜歡概念和可能性", en:"drawn to concepts and possibilities"}, loM:{zh:"相信經驗和事實", en:"trusts experience and facts"},
+       lv:{zh:["偏務實。相信驗證過的做法，重視實際能用的東西。","中間型。有選擇地嘗新，熟悉和新奇各占一半。","偏探索。喜歡新奇、抽象和背後的意義。"],
+           en:["Leans practical. Trusts proven methods and what works.","In the middle. Selectively curious; familiar and novel in equal measure.","Leans exploratory. Enjoys novelty, abstraction and meaning."]}},
+    C:{zh:"盡責性", en:"Conscientiousness", hi:"J", lo:"P", q:{zh:"怎麼面對外在世界", en:"How the outer world is handled"},
+       hiM:{zh:"喜歡事情有定案", en:"likes things settled"}, loM:{zh:"喜歡保留彈性", en:"likes to keep options open"},
+       lv:{zh:["偏隨性。喜歡保留彈性，事情到最後再決定也沒關係。","中間型。有計畫但不僵硬，被打亂也能調整。","偏規劃。會事先安排、重視承諾，不喜歡計畫被打亂。"],
+           en:["Leans flexible. Keeps options open; deciding late is fine.","In the middle. Plans without rigidity and adjusts when disrupted.","Leans planned. Arranges ahead, keeps commitments, dislikes disruption."]}},
+    A:{zh:"親和性", en:"Agreeableness", hi:"F", lo:"T", q:{zh:"怎麼做決定", en:"How decisions are made"},
+       hiM:{zh:"決定時先看對人的影響", en:"weighs the impact on people first"}, loM:{zh:"決定時先看邏輯", en:"weighs logic first"},
+       lv:{zh:["偏邏輯。對事不對人，能接受講出來會有點不舒服的事實。","中間型。邏輯和感受輪流上場，視情況決定。","偏和諧。很在意別人的感受，決定時先看對人的影響。"],
+           en:["Leans logical. Issue over person; can voice uncomfortable truths.","In the middle. Logic and feelings take turns.","Leans harmonious. Cares about feelings and weighs impact on people first."]}},
+    N:{zh:"情緒穩定度", en:"Emotional stability", hi:"T", lo:"A", q:{zh:"身分（16personalities 附加）", en:"Identity (16personalities extra)"},
+       hiM:{zh:"動盪型：較敏感、會自我檢討", en:"Turbulent: sensitive, self-critical"}, loM:{zh:"自信型：情緒穩定、不太自我懷疑", en:"Assertive: steady, little self-doubt"},
+       lv:{zh:["情緒起伏較大。容易擔心，被批評後會反芻。","中間型。事前會想，但當下多半冷靜。","情緒穩定。不太擔心，遇事冷靜，很快放下。"],
+           en:["More reactive. Worries easily and replays criticism.","In the middle. Thinks ahead but mostly calm in the moment.","Steady. Rarely worries, stays calm, lets things go."]}}
+  };
+  var TYPES = {
+    ISTJ:{zh:["可靠、重承諾、相信經驗。先把事情做對，再談新做法。","不是沒有感情，是感情不外露。"], en:["Reliable, committed, trusts experience. Gets it right first, then considers new methods.","Not unfeeling, just doesn't show it."]},
+    ISFJ:{zh:["細心、記得別人的喜好，默默把事情照顧好。","好說話不等於沒有底線。"], en:["Attentive, remembers what people like, quietly takes care of things.","Easygoing doesn't mean no limits."]},
+    INFJ:{zh:["想得深、看得遠，對人有直覺，但需要獨處整理。","安靜不代表沒有立場。"], en:["Thinks deeply, sees far, reads people intuitively, needs solitude to process.","Quiet doesn't mean no position."]},
+    INTJ:{zh:["有長遠計畫，喜歡把系統想通，對效率要求高。","直接不等於冷漠。"], en:["Long-range plans, likes to understand systems, demands efficiency.","Direct isn't cold."]},
+    ISTP:{zh:["動手解決問題，冷靜、務實，不喜歡多餘的規矩。","話少不代表不在乎。"], en:["Hands-on problem solver, calm, practical, dislikes needless rules.","Few words doesn't mean not caring."]},
+    ISFP:{zh:["溫和、重感受，用行動而不是言語表達關心。","隨和不等於沒有想法。"], en:["Gentle, feeling-led, shows care through actions rather than words.","Easygoing doesn't mean no opinions."]},
+    INFP:{zh:["重視價值觀和真誠，內心世界豐富。","理想主義不等於不切實際。"], en:["Values authenticity and principles, rich inner world.","Idealistic isn't impractical."]},
+    INTP:{zh:["愛拆解概念、追求邏輯一致，常常想到忘記時間。","質疑不等於反對。"], en:["Loves taking concepts apart, seeks logical consistency, loses track of time thinking.","Questioning isn't opposing."]},
+    ESTP:{zh:["行動派，反應快，喜歡當下解決。","看起來衝動，背後常是很快的判斷。"], en:["Action-first, quick reactions, solves things on the spot.","What looks impulsive is often fast judgment."]},
+    ESFP:{zh:["熱情、活在當下，讓身邊的人放鬆。","愛玩不等於不認真。"], en:["Warm, lives in the moment, puts people at ease.","Playful doesn't mean not serious."]},
+    ENFP:{zh:["點子多、對人熱情，容易被新的可能性吸引。","三分鐘熱度常是因為還在找真正想做的事。"], en:["Full of ideas, warm with people, drawn to new possibilities.","Short attention often means still searching for what truly matters."]},
+    ENTP:{zh:["愛辯論、愛挑戰假設，靠對話把想法磨清楚。","唱反調多半是在測試想法，不是針對人。"], en:["Loves debate, challenges assumptions, sharpens ideas through talk.","Playing devil's advocate tests ideas, not people."]},
+    ESTJ:{zh:["組織者，講規則、講效率，把事情推到完成。","嚴格通常是對自己更嚴。"], en:["Organizer, rules and efficiency, drives things to completion.","Strict, and usually stricter with themselves."]},
+    ESFJ:{zh:["照顧大家、重視和諧，記得每個人的需要。","在意別人的看法不等於沒有主見。"], en:["Takes care of everyone, values harmony, remembers each person's needs.","Caring what others think doesn't mean no opinions."]},
+    ENFJ:{zh:["會帶人、會鼓勵人，對群體氣氛敏感。","熱心不等於沒有自己的需要。"], en:["Leads and encourages, sensitive to group mood.","Helpfulness doesn't mean no needs of their own."]},
+    ENTJ:{zh:["目標導向，敢做決定，習慣把資源排好。","強勢多半是因為急著把事情做成。"], en:["Goal-driven, decisive, organizes resources.","Forcefulness usually comes from urgency to get things done."]}
+  };
+  var HINTS = {
+    E:{zh:"一個想出門、一個想在家：先講好每週各留一個晚上給對方的模式，臨時邀約時先問「今天有沒有力氣」。", en:"One wants out, one wants home: agree on one evening a week for each side's mode, and check energy before spontaneous plans."},
+    O:{zh:"一個問「實際怎麼做」、一個問「為什麼」：討論時先讓 N 把想法說完，再讓 S 幫忙落地。", en:"One asks how, one asks why: let N finish the idea first, then let S ground it."},
+    A:{zh:"一個先講道理、一個先顧感受：F 先說出感受，T 再提解法；順序反過來就容易吵。", en:"One leads with logic, one with feelings: F names the feeling first, then T offers the fix. Reverse the order and it turns into a fight."},
+    C:{zh:"一個要定案、一個要彈性：由 J 定大框架和時間，P 保留細節的自由。", en:"One wants it settled, one wants room: J sets the frame and timing, P keeps freedom in the details."},
+    N:{zh:"一個容易擔心、一個比較放得下：不要用「想太多」回應對方的擔心，先問「你在擔心哪一步」。", en:"One worries, one lets go: never answer worry with \"you overthink\"; ask which step is the worry."}
+  };
+  var STR = {
+    zh:{
+      eyebrow:"五大人格 · 二十題情境版", title:"人格二十題",
+      lede:"用二十個生活情境，判斷「像不像我」，就能得到五大人格特質分數，以及對應的四個字母。",
+      themeAuto:"跟隨系統", themeLight:"淺色", themeDark:"深色", langBtn:"EN",
+      introLi1:"每題只要憑直覺選「像不像我」，沒有對錯。", introLi2:"大約三分鐘。中途離開，下次打開會接著作答。", introLi3:"結果會給五項特質的分數、四個字母的把握程度、你答案裡的內在拉扯，還能猜猜對方、兩人比較。",
+      nameLabel:"你的名字（選填，會出現在結果上）", namePh:"例如：小美", shuffle:"題目隨機順序",
+      qOf:"第 {n} 題 / {total}", answered:"已答 {n} 題", likeYou:"這句話像你嗎？", likeThem:"你覺得 {name} 會怎麼回答這句話？",
+      prev:"上一題", next:"下一題", seeResult:"看結果", finish:"完成",
+      c1:"完全不像{s}", c2:"不太像{s}", c3:"有點像{s}", c4:"非常像{s}", me:"我",
+      s1:"幾乎從來不會這樣", s2:"偶爾會，但多數時候不是", s3:"多數時候是這樣", s4:"幾乎每次都這樣",
+      unanswered:"還有題目沒作答，先補上這一題", you:"你", someone:"對方",
+      closest:"{who} 最接近的類型", seePartner:"看 {name} 的結果", alt:"其次是 <b>{alt}</b>，因為 {pair} 這一組最接近中線。",
+      letter:"字母", meaning:"意思", sure:"把握", vSure:"非常明確", sure1:"明確", lean:"略偏", mid:"中線偏 {L}", refined:"追問後偏 {L}",
+      typeIntro:"{type} 的簡介", myth:"常見誤會：",
+      big5:"五大特質", scaleNote:"0% 為最低、100% 為最高、中間的細線是 50%。每項只有 4 題，上下 15% 都在正常誤差內；落在 40% 到 60% 的項目，換個心情再測可能翻面。",
+      tension:"{who} 答案裡的內在拉扯", tensionIntro:"同一項特質裡，有些題目往一邊、有些往另一邊。這些地方通常比四個字母更能描述一個人。", tensionNone:"每一項特質裡的四題都指向同一邊，答案很一致。", butAlso:"，但同時", emotion:"情緒",
+      followCta:"有 {n} 項落在中線：{list}。多答 {m} 題追問，可以分出方向。", followBtn:"開始追問", followDone:"追問完成，字母已依追問結果更新。", followTitle:"追問",
+      copyLink:"複製結果連結", copyText:"複製結果文字", card:"產生圖卡", guess:"猜猜對方", compare:"兩人比較", history:"歷次紀錄", redo:"重新測驗", home:"回首頁", back:"返回", myResult:"看我的結果",
+      copied:"已複製", copyFail:"無法自動複製，請手動選取", linkCopied:"連結已複製，傳給對方即可",
+      record:"作答紀錄", q:"題目", ans:"作答",
+      scoring:"計分：完全不像我 1 分到非常像我 4 分，反向題以 5 減去原始分數；每項 4 題，百分比 = (總分 − 4) ÷ 12。字母對照：外向性高為 E 低為 I，開放性高為 N 低為 S，親和性高為 F 低為 T，盡責性高為 J 低為 P，情緒起伏高為 -T 低為 -A。",
+      viewing:"這是 {name} 的結果", viewingNote:"已把 {name} 的結果存在這個瀏覽器，可以用來兩人比較或核對你的猜測。", takeToo:"我也要測", compareMine:"和我的結果比較", guessThem:"猜猜 {name}",
+      hasResult:"你的結果：{type}", inProgress:"作答到第 {n} 題，可以繼續。", continueBtn:"繼續作答", start:"開始測驗",
+      guessPending:"{by} 猜了你的答案。完成測驗後就能看猜中多少。", partnerStored:"已收到 {name} 的結果。",
+      guessSetupTitle:"猜猜對方", guessSetupText:"接下來的 20 題，請用「你覺得對方會怎麼答」來作答。做完可以把猜測連結傳給對方，也可以在拿到對方結果後看準確度。", targetLabel:"對方的名字", targetPh:"例如：Justin", startGuess:"開始猜",
+      guessDoneTitle:"你對 {name} 的猜測完成了", guessDoneText:"把猜測連結傳給 {name}，對方打開就能看到你猜中多少；或是拿到 {name} 的結果連結後，回來這裡看準確度。", copyGuessLink:"複製猜測連結", seeAccuracy:"看準確度", accuracyWaiting:"還沒有 {name} 的結果連結，拿到後打開就會自動比對。",
+      accTitle:"猜測準確度", accHead:"{by} 猜 {target}", accExact:"20 題猜中 {n} 題", accNear:"差 1 分以內 {n} 題", accTrait:"五項特質：猜的 vs 實際", guessed:"猜的", actual:"實際", diffCol:"差距", accMiss:"看走眼的題目（差 2 分以上）", accMissNone:"沒有差 2 分以上的題目，猜得很準。", accNone:"還沒有可以比對的資料。需要一份猜測，和被猜那個人的實際結果。", accHow1:"你猜對方：先用「猜猜對方」作答，再打開對方的結果連結。", accHow2:"對方猜你：請對方用「猜猜對方」作答後，把猜測連結傳給你，你在做完自己的測驗後打開。",
+      cmpTitle:"兩人比較", cmpNeedMe:"先完成你自己的測驗，才能比較。", cmpNeedPartner:"還沒有對方的結果。請對方做完測驗，按「複製結果連結」傳給你，你打開連結就會自動存下來；或把連結貼在下面。", pasteLabel:"貼上對方的結果連結或猜測連結", pastePh:"https://…#a=…", importBtn:"匯入", importBad:"看不懂這個連結，請確認是從結果頁複製的", importOk:"已匯入 {name} 的結果",
+      group:"組別", same:"相同", diff:"不同", sameLetters:"相同的字母：{list}。", diffNone:"四個字母完全相同，差別只在每一項的深淺。", biggestGap:"分數差最多的是{trait}，相差 {g} 個百分點。", hintsTitle:"不同的地方，怎麼相處", sameNote:"相同的字母不等於沒有差異，看分數的深淺就知道誰更偏。", replacePartner:"換一個人比較",
+      histTitle:"歷次紀錄", histNone:"還沒有紀錄。每完成一次測驗會自動記一筆。", histDate:"日期", histType:"類型", histDelta:"括號內是和上一次的差距。", del:"刪除", histNote:"紀錄只存在這個瀏覽器裡。",
+      cardTitle:"結果圖卡", cardNote:"長按圖片可以存到手機，或按下載。", download:"下載圖片", cardDate:"測驗日期",
+      resetConfirm:"要清掉目前的結果重新測驗嗎？歷次紀錄會保留。", followMid:"中線",
+      done:"完成"
+    },
+    en:{
+      eyebrow:"Big Five · 20 situations", title:"Personality in 20",
+      lede:"Twenty everyday situations. Say how much each one is like you, and get your Big Five scores plus the four letters.",
+      themeAuto:"System", themeLight:"Light", themeDark:"Dark", langBtn:"中文",
+      introLi1:"Go with your gut on each item. There are no right answers.", introLi2:"About three minutes. Leave and come back any time; progress is kept.", introLi3:"You get five trait scores, how sure each letter is, your inner tensions, and you can guess a partner and compare two people.",
+      nameLabel:"Your name (optional, shown on the result)", namePh:"e.g. Amy", shuffle:"Shuffle question order",
+      qOf:"Question {n} / {total}", answered:"{n} answered", likeYou:"Is this like you?", likeThem:"How would {name} answer this?",
+      prev:"Back", next:"Next", seeResult:"See result", finish:"Finish",
+      c1:"Not like {s} at all", c2:"Not really like {s}", c3:"Somewhat like {s}", c4:"Very much like {s}", me:"me",
+      s1:"Almost never", s2:"Occasionally, but mostly not", s3:"Most of the time", s4:"Almost always",
+      unanswered:"One question is still unanswered", you:"You", someone:"Someone",
+      closest:"Closest type for {who}", seePartner:"See {name}'s result", alt:"Second closest is <b>{alt}</b>, because {pair} is the pair nearest the midline.",
+      letter:"Letter", meaning:"Meaning", sure:"Certainty", vSure:"Very clear", sure1:"Clear", lean:"Slight lean", mid:"Midline, leans {L}", refined:"Follow-up: leans {L}",
+      typeIntro:"About {type}", myth:"Common myth: ",
+      big5:"Big Five", scaleNote:"0% is lowest, 100% highest; the thin line is 50%. Each trait has only 4 items, so ±15% is normal noise. Scores between 40% and 60% can flip on another day.",
+      tension:"Inner tensions in {who}'s answers", tensionIntro:"Within one trait, some items pulled one way and some the other. These spots usually describe a person better than four letters.", tensionNone:"All four items in every trait point the same way. Very consistent answers.", butAlso:", yet also ", emotion:"Emotion",
+      followCta:"{n} trait(s) sit on the midline: {list}. Answer {m} follow-up questions to find the direction.", followBtn:"Start follow-up", followDone:"Follow-up done. Letters updated from your answers.", followTitle:"Follow-up",
+      copyLink:"Copy result link", copyText:"Copy result text", card:"Make image card", guess:"Guess a partner", compare:"Compare two people", history:"History", redo:"Retake", home:"Home", back:"Back", myResult:"My result",
+      copied:"Copied", copyFail:"Could not copy automatically; please select the text", linkCopied:"Link copied. Send it to the other person.",
+      record:"Your answers", q:"Item", ans:"Answer",
+      scoring:"Scoring: 1 (not at all) to 4 (very much); reverse items score 5 minus the raw value; 4 items per trait; percent = (sum − 4) ÷ 12. Letters: high Extraversion E / low I; high Openness N / low S; high Agreeableness F / low T; high Conscientiousness J / low P; high emotional reactivity -T / low -A.",
+      viewing:"This is {name}'s result", viewingNote:"{name}'s result is saved in this browser for comparing or checking your guess.", takeToo:"Take the test", compareMine:"Compare with mine", guessThem:"Guess {name}",
+      hasResult:"Your result: {type}", inProgress:"You stopped at question {n}. Continue any time.", continueBtn:"Continue", start:"Start",
+      guessPending:"{by} guessed your answers. Finish the test to see how close they were.", partnerStored:"{name}'s result has been received.",
+      guessSetupTitle:"Guess a partner", guessSetupText:"Answer the next 20 items the way you think the other person would. Afterwards you can send them the guess link, or check accuracy once you have their result.", targetLabel:"Their name", targetPh:"e.g. Justin", startGuess:"Start guessing",
+      guessDoneTitle:"Your guess for {name} is done", guessDoneText:"Send the guess link to {name}; when they open it they see how close you were. Or open {name}'s result link and come back here for accuracy.", copyGuessLink:"Copy guess link", seeAccuracy:"See accuracy", accuracyWaiting:"No result link from {name} yet. Open it when you have it and the comparison appears.",
+      accTitle:"Guess accuracy", accHead:"{by} guessing {target}", accExact:"{n} of 20 exactly right", accNear:"{n} within one point", accTrait:"Five traits: guessed vs actual", guessed:"Guessed", actual:"Actual", diffCol:"Gap", accMiss:"Biggest misses (2 points or more)", accMissNone:"No item off by 2 or more. Very accurate.", accNone:"Nothing to compare yet. You need a guess and the actual result of the person guessed.", accHow1:"You guess them: use \"Guess a partner\", then open their result link.", accHow2:"They guess you: they use \"Guess a partner\" and send you the guess link; open it after finishing your own test.",
+      cmpTitle:"Compare two people", cmpNeedMe:"Finish your own test first.", cmpNeedPartner:"No partner result yet. Ask them to finish the test and tap \"Copy result link\"; opening it saves it here automatically, or paste it below.", pasteLabel:"Paste a result link or guess link", pastePh:"https://…#a=…", importBtn:"Import", importBad:"That link isn't recognised. Copy it from the result page.", importOk:"Imported {name}'s result",
+      group:"Pair", same:"Same", diff:"Different", sameLetters:"Same letters: {list}.", diffNone:"All four letters match; the difference is only in degree.", biggestGap:"Largest gap: {trait}, {g} points apart.", hintsTitle:"Where you differ, and how to live with it", sameNote:"Same letters don't mean no difference; the bars show who leans further.", replacePartner:"Compare someone else",
+      histTitle:"History", histNone:"No records yet. Each completed test is saved automatically.", histDate:"Date", histType:"Type", histDelta:"Numbers in brackets are the change from the previous record.", del:"Delete", histNote:"Records live only in this browser.",
+      cardTitle:"Result card", cardNote:"Long-press the image to save it, or use download.", download:"Download image", cardDate:"Taken on",
+      resetConfirm:"Clear the current result and retake? History is kept.", followMid:"midline",
+      done:"Done"
     }
-  }
-  function goPrev(){ if (state.idx > 0) { state.idx--; save(); renderQuiz(); } }
-  function scrollToQuiz(){ var r = quizEl.getBoundingClientRect(); if (r.top < 0) quizEl.scrollIntoView({behavior:'smooth', block:'start'}); }
+  };
 
-  $('opts').addEventListener('click', function(e){
-    var b = e.target.closest('.opt'); if (b) choose(Number(b.getAttribute('data-v')));
-  });
-  $('next').addEventListener('click', function(){ this.blur(); goNext(); });
-  $('prev').addEventListener('click', function(){ this.blur(); goPrev(); });
-  document.addEventListener('keydown', function(e){
-    if (quizEl.hidden || e.target.closest('input, textarea, select')) return;
-    if (e.key >= '1' && e.key <= '4') { choose(Number(e.key)); return; }
-    if (e.target.closest('button, a, summary')) return; // 焦點在按鈕上時，Enter／空白鍵交給按鈕本身處理
-    if (e.key === 'ArrowLeft') goPrev();
-    else if (e.key === 'ArrowRight' || e.key === 'Enter') goNext();
-  });
+  /* ============================== 狀態 ============================== */
+  var KEY = "p20-v2";
+  var S = {me:null, guess:null, partner:null, guessOfMe:null, history:[], lang:"zh", theme:"", shuffle:false, run:null, view:"home"};
+  try { var saved = JSON.parse(localStorage.getItem(KEY) || "null"); if (saved && typeof saved === "object") { for (var k in saved) S[k] = saved[k]; } } catch (e) {}
+  if (!Array.isArray(S.history)) S.history = [];
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
 
-  // ----- scoring -----
-  function score(answers){
-    var keyed = ITEMS.map(function(it, i){ var raw = answers[i]; return it.k > 0 ? raw : 5 - raw; });
-    var sums = {}, pct = {}, side = {};
+  var L = S.lang === "en" ? "en" : "zh";
+  function t(k, vars){ var s = (STR[L] && STR[L][k] !== undefined) ? STR[L][k] : (STR.zh[k] || k); if (vars) for (var v in vars) s = s.split("{" + v + "}").join(vars[v]); return s; }
+  function tx(o){ return L === "en" ? (o.en !== undefined ? o.en : o.e) : (o.zh !== undefined ? o.zh : o.t); }
+  function trName(tr){ return TRAITS[tr][L]; }
+  function trShort(tr){ return ({E:{zh:"外向",en:"Extra."},O:{zh:"開放",en:"Open."},C:{zh:"盡責",en:"Consc."},A:{zh:"親和",en:"Agree."},N:{zh:"情緒穩定",en:"Stab."}})[tr][L]; }
+  function sep(){ return L === "en" ? ", " : "、"; }
+  function itemText(it){ return L === "en" ? it.e : it.t; }
+  function itemLabel(it, raw){ return raw >= 3 ? (L === "en" ? it.ae : it.a) : (L === "en" ? it.de : it.d); }
+  function choiceLabel(v, subject){ return t("c" + v, {s: subject}); }
+  function nestQuotes(s){ return s.replace(/「/g, "『").replace(/」/g, "』"); }
+  function quote(s){ return L === "en" ? "“" + s + "”" : "「" + nestQuotes(s) + "」"; }
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]; }); }
+  var $ = function(id){ return document.getElementById(id); };
+  var app = $("app");
+
+  /* ============================== 計分 ============================== */
+  function keyedOf(answers){ return ITEMS.map(function(it, i){ var raw = answers[i]; return it.k > 0 ? raw : 5 - raw; }); }
+  function traitIdx(tr){ var idx = []; ITEMS.forEach(function(it, i){ if (it.tr === tr) idx.push(i); }); return idx; }
+  function score(answers, follow){
+    follow = follow || {};
+    var keyed = keyedOf(answers), pct = {}, side = {}, base = {}, letters = {}, conf = {}, refined = {};
     ORDER.forEach(function(tr){
-      var idx = []; ITEMS.forEach(function(it, i){ if (it.tr === tr) idx.push(i); });
-      var s = idx.reduce(function(acc, i){ return acc + keyed[i]; }, 0);
-      sums[tr] = s;
+      var idx = traitIdx(tr), s = idx.reduce(function(a, i){ return a + keyed[i]; }, 0);
       pct[tr] = Math.round((s - 4) / 12 * 100);
       var hiN = idx.filter(function(i){ return keyed[i] >= 3; }).length;
-      var loN = idx.length - hiN;
-      side[tr] = pct[tr] > 50 ? 'hi' : pct[tr] < 50 ? 'lo' : (hiN > loN ? 'hi' : 'lo');
-    });
-    var letters = {}, conf = {};
-    ORDER.forEach(function(tr){
-      var T = TRAITS[tr];
-      letters[tr] = side[tr] === 'hi' ? T.hi : T.lo;
+      side[tr] = pct[tr] > 50 ? "hi" : pct[tr] < 50 ? "lo" : (hiN > idx.length - hiN ? "hi" : "lo");
+      base[tr] = side[tr] === "hi" ? TRAITS[tr].hi : TRAITS[tr].lo;
       var d = Math.abs(pct[tr] - 50);
-      conf[tr] = d >= 30 ? '非常明確' : d >= 15 ? '明確' : d >= 5 ? '略偏' : '中線偏 ' + letters[tr];
+      conf[tr] = d >= 30 ? t("vSure") : d >= 15 ? t("sure1") : d >= 5 ? t("lean") : t("mid", {L: base[tr]});
+      letters[tr] = base[tr];
+      if (follow[tr] && follow[tr].length === 3) {
+        var fs = follow[tr].reduce(function(a, v, j){ return a + (FOLLOW[tr][j].k > 0 ? v : 5 - v); }, 0);
+        refined[tr] = fs >= 8 ? TRAITS[tr].hi : TRAITS[tr].lo;
+        letters[tr] = refined[tr];
+        conf[tr] = t("refined", {L: refined[tr]});
+      }
     });
     var type = letters.E + letters.O + letters.A + letters.C;
-    var weakest = ['E','O','A','C'].sort(function(a,b){ return Math.abs(pct[a]-50) - Math.abs(pct[b]-50); })[0];
+    var weakest = ["E","O","A","C"].sort(function(a, b){ return Math.abs(pct[a] - 50) - Math.abs(pct[b] - 50); })[0];
     var alt = {}; ORDER.forEach(function(tr){ alt[tr] = letters[tr]; });
     alt[weakest] = letters[weakest] === TRAITS[weakest].hi ? TRAITS[weakest].lo : TRAITS[weakest].hi;
-    var altType = alt.E + alt.O + alt.A + alt.C;
-    // observations: traits where items disagree
     var obs = [];
     ORDER.forEach(function(tr){
-      var idx = []; ITEMS.forEach(function(it, i){ if (it.tr === tr) idx.push(i); });
+      var idx = traitIdx(tr);
       var hi = idx.filter(function(i){ return keyed[i] >= 3; }), lo = idx.filter(function(i){ return keyed[i] <= 2; });
       var vals = idx.map(function(i){ return keyed[i]; });
       var spread = Math.max.apply(null, vals) - Math.min.apply(null, vals);
       if (hi.length && lo.length && (spread >= 2 || Math.min(hi.length, lo.length) >= 2)) {
-        var lab = function(i){ return answers[i] >= 3 ? ITEMS[i].a : ITEMS[i].d; };
-        var T = TRAITS[tr];
-        var hiName = tr === 'N' ? '情緒起伏' : T.name;
-        obs.push({tr:tr, hiSide:hi.map(lab), loSide:lo.map(lab)});
+        obs.push({tr: tr, hiSide: hi.map(function(i){ return itemLabel(ITEMS[i], answers[i]); }), loSide: lo.map(function(i){ return itemLabel(ITEMS[i], answers[i]); })});
       }
     });
-    return {keyed:keyed, pct:pct, letters:letters, conf:conf, type:type, altType:altType, weakest:weakest, obs:obs};
+    var midline = ORDER.filter(function(tr){ return pct[tr] >= 40 && pct[tr] <= 60 && !refined[tr]; });
+    return {pct: pct, base: base, letters: letters, conf: conf, refined: refined, type: type, altType: alt.E + alt.O + alt.A + alt.C, weakest: weakest, obs: obs, midline: midline};
   }
-  function level(pct){ return pct <= 33 ? 0 : pct >= 67 ? 2 : 1; }
-  function shownPct(tr, pct){ return tr === 'N' ? 100 - pct : pct; } // 情緒穩定度 = 100 − 情緒起伏
+  function level(p){ return p <= 33 ? 0 : p >= 67 ? 2 : 1; }
+  function shown(tr, p){ return tr === "N" ? 100 - p : p; }
+  function typeOf(person){ return score(person.answers, person.follow).type; }
+  function whoName(person){ return person.name ? esc(person.name) : t("you"); }
 
-  // ----- result rendering -----
-  function showResult(){
-    var r = score(state.answers);
-    var who = state.name ? esc(state.name) : '你';
-    var identity = r.letters.N;
-    var idConf = r.conf.N;
-    var html = '';
-
-    html += '<div class="type-card">' +
-      '<div class="eyebrow">' + who + ' 最接近的類型</div>' +
-      '<div class="type-letters">' + r.type + '<span class="identity">-' + identity + '</span></div>' +
-      '<p>其次是 <b>' + r.altType + '</b>，因為 ' + TRAITS[r.weakest].hi + '／' + TRAITS[r.weakest].lo + ' 這一組最接近中線。</p>' +
-      '<table><tr><th>字母</th><th>意思</th><th>把握</th></tr>';
-    ['E','O','A','C','N'].forEach(function(tr){
-      var T = TRAITS[tr], L = r.letters[tr];
-      var meaning = L === T.hi ? T.hiM : T.loM;
-      var mid = r.conf[tr].indexOf('中線') === 0;
-      html += '<tr><td class="l">' + (tr === 'N' ? '-' : '') + L + '</td><td>' + meaning + '</td><td class="c"><span class="pill' + (mid ? ' mid' : '') + '">' + r.conf[tr] + '</span></td></tr>';
-    });
-    html += '</table></div>';
-
-    html += '<h2>五大特質</h2><div class="traits">';
-    ORDER.forEach(function(tr){
-      var T = TRAITS[tr], p = shownPct(tr, r.pct[tr]);
-      html += '<div class="trait"><span class="trait-name">' + T.name + '<small>' + T.en + '</small></span>' +
-        '<span class="trait-pct">' + p + '%</span>' +
-        '<div class="track"><div class="fill" style="width:' + p + '%"></div><div class="mid"></div></div>' +
-        '<p class="trait-desc">' + T.lv[level(p)] + '</p></div>';
-    });
-    html += '</div><p class="note">0% 為最低、100% 為最高、中間的細線是 50%。每項只有 4 題，上下 15% 都在正常誤差內；落在 40% 到 60% 的項目，換個心情再測可能翻面。</p>';
-
-    html += '<h2>' + who + ' 答案裡的內在拉扯</h2>';
-    if (r.obs.length) {
-      html += '<p class="muted">同一項特質裡，有些題目往一邊、有些往另一邊。這些地方通常比四個字母更能描述一個人。</p><ul class="obs">';
-      r.obs.forEach(function(o){
-        var T = TRAITS[o.tr];
-        var label = o.tr === 'N' ? '情緒' : T.name;
-        html += '<li><b>' + label + '</b>：' + o.hiSide.join('、') + '，但同時' + o.loSide.join('、') + '。</li>';
-      });
-      html += '</ul>';
+  /* ============================== 連結 ============================== */
+  function baseUrl(){ return location.origin + location.pathname; }
+  function encFollow(f){ var s = ""; for (var tr in (f || {})) if (f[tr] && f[tr].length === 3) s += tr + f[tr].join(""); return s; }
+  function decFollow(s){ var f = {}, m = /([EOCAN])([1-4]{3})/g, r; while ((r = m.exec(s || ""))) f[r[1]] = r[2].split("").map(Number); return f; }
+  function resultLink(p){ var q = "a=" + p.answers.join("") + (p.name ? "&n=" + encodeURIComponent(p.name) : "") + (encFollow(p.follow) ? "&f=" + encFollow(p.follow) : ""); return baseUrl() + "#" + q; }
+  function guessLink(g, by){ return baseUrl() + "#g=" + g.answers.join("") + "&t=" + encodeURIComponent(g.target || "") + "&by=" + encodeURIComponent(by || ""); }
+  function parseLink(str){
+    var h = String(str || "").trim(); var i = h.indexOf("#"); if (i >= 0) h = h.slice(i + 1);
+    var P = new URLSearchParams(h), a = P.get("a"), g = P.get("g");
+    if (a && /^[1-4]{20}$/.test(a)) return {kind: "result", person: {name: (P.get("n") || "").slice(0, 20), answers: a.split("").map(Number), follow: decFollow(P.get("f"))}};
+    if (g && /^[1-4]{20}$/.test(g)) return {kind: "guess", guess: {by: (P.get("by") || "").slice(0, 20), target: (P.get("t") || "").slice(0, 20), answers: g.split("").map(Number)}};
+    return null;
+  }
+  function importLink(str, silent){
+    var r = parseLink(str);
+    if (!r) { if (!silent) toast(t("importBad")); return false; }
+    if (r.kind === "result") {
+      if (S.me && S.me.done && S.me.answers.join("") === r.person.answers.join("")) { S.view = "result"; save(); return true; }
+      S.partner = r.person; S.view = "view"; save();
+      if (!silent) toast(t("importOk", {name: r.person.name || t("someone")}));
     } else {
-      html += '<p class="muted">每一項特質裡的四題都指向同一邊，答案很一致。</p>';
+      S.guessOfMe = r.guess; S.view = (S.me && S.me.done) ? "accuracy" : "home"; save();
     }
-
-    html += '<div class="actions">' +
-      '<button class="btn primary" type="button" id="copy">複製結果</button>' +
-      '<button class="btn ghost" type="button" id="redo">重新測驗</button></div>';
-
-    html += '<details><summary>作答紀錄</summary><table><tr><th>#</th><th>題目</th><th>作答</th></tr>';
-    ITEMS.forEach(function(it, i){
-      html += '<tr><td class="c">' + (i+1) + '</td><td>' + it.t + '</td><td class="c">' + CHOICES[state.answers[i]-1].l + '</td></tr>';
-    });
-    html += '</table></details>';
-
-    html += '<p class="note">計分：完全不像我 1 分到非常像我 4 分，反向題以 5 減去原始分數；每項 4 題，百分比 = (總分 − 4) ÷ 12。字母對照：外向性高為 E 低為 I，開放性高為 N 低為 S，親和性高為 F 低為 T，盡責性高為 J 低為 P，情緒起伏高為 -T 低為 -A。</p>';
-
-    resultEl.innerHTML = html;
-    quizEl.hidden = true; introEl.hidden = true; resultEl.hidden = false;
-    window.scrollTo({top:0, behavior:'smooth'});
-
-    $('copy').addEventListener('click', function(){ copyText(buildCopy(r)); });
-    $('redo').addEventListener('click', function(){
-      state = {name: state.name, answers: [], idx: 0, done: false}; save();
-      resultEl.hidden = true; introEl.hidden = false; quizEl.hidden = false; renderQuiz();
-      window.scrollTo({top:0, behavior:'smooth'});
-    });
+    return true;
   }
 
-  function buildCopy(r){
-    var lines = [];
-    lines.push('人格二十題｜' + (state.name || '未填名字'));
-    lines.push('類型：' + r.type + '-' + r.letters.N + '（其次 ' + r.altType + '）');
-    lines.push(ORDER.map(function(tr){ return TRAITS[tr].name + ' ' + shownPct(tr, r.pct[tr]) + '%'; }).join('｜'));
-    lines.push(['E','O','A','C','N'].map(function(tr){ return (tr === 'N' ? '-' : '') + r.letters[tr] + ' ' + r.conf[tr]; }).join('／'));
-    r.obs.forEach(function(o){
-      var label = o.tr === 'N' ? '情緒' : TRAITS[o.tr].name;
-      lines.push('拉扯（' + label + '）：' + o.hiSide.join('、') + '，但同時' + o.loSide.join('、'));
-    });
-    return lines.join('\n');
-  }
-  function copyText(text){
-    var done = function(){ toast('已複製，貼給對方就可以了'); };
-    var fail = function(){ toast('無法自動複製，請手動選取文字'); };
+  /* ============================== 共用 UI ============================== */
+  var toastTimer;
+  function toast(msg){ var el = $("toast"); el.textContent = msg; el.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(function(){ el.classList.remove("show"); }, 2400); }
+  function copyText(text, okMsg){
+    var done = function(){ toast(okMsg || t("copied")); }, fail = function(){ toast(t("copyFail")); };
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function(){ legacyCopy(text) ? done() : fail(); });
     else legacyCopy(text) ? done() : fail();
   }
-  function legacyCopy(text){
-    try {
-      var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', '');
-      ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select();
-      var ok = document.execCommand('copy'); document.body.removeChild(ta); return ok;
-    } catch (e) { return false; }
-  }
-  var toastTimer;
-  function toast(msg){ var t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2200); }
+  function legacyCopy(text){ try { var ta = document.createElement("textarea"); ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select(); var ok = document.execCommand("copy"); document.body.removeChild(ta); return ok; } catch (e) { return false; } }
+  function go(view){ S.view = view; save(); render(); window.scrollTo({top: 0, behavior: "smooth"}); }
+  function on(id, fn){ var el = $(id); if (el) el.addEventListener("click", function(e){ this.blur(); fn.call(this, e); }); }
+  function btn(id, label, cls){ return '<button class="btn ' + (cls || "") + '" type="button" id="' + id + '">' + label + '</button>'; }
 
-  // boot
-  if (state.done && state.answers.filter(Boolean).length === ITEMS.length) showResult();
-  else { if (state.idx >= ITEMS.length || state.idx < 0) state.idx = 0; renderQuiz(); }
+  function applyTheme(){ var r = document.documentElement; if (S.theme === "light" || S.theme === "dark") r.setAttribute("data-theme", S.theme); else r.removeAttribute("data-theme"); $("theme-btn").textContent = S.theme === "light" ? t("themeLight") : S.theme === "dark" ? t("themeDark") : t("themeAuto"); }
+  function renderHeader(){ document.documentElement.lang = L === "en" ? "en" : "zh-Hant"; document.title = t("title"); $("h-eyebrow").textContent = t("eyebrow"); $("h-title").textContent = t("title"); $("h-lede").textContent = t("lede"); $("lang-btn").textContent = t("langBtn"); applyTheme(); }
+  $("lang-btn").addEventListener("click", function(){ this.blur(); L = L === "zh" ? "en" : "zh"; S.lang = L; save(); render(); });
+  $("theme-btn").addEventListener("click", function(){ this.blur(); S.theme = S.theme === "" ? "light" : S.theme === "light" ? "dark" : ""; save(); applyTheme(); });
+
+  /* ============================== 作答引擎 ============================== */
+  function range(n){ var a = []; for (var i = 0; i < n; i++) a.push(i); return a; }
+  function shuffled(n){ var a = range(n); for (var j = a.length - 1; j > 0; j--) { var r = Math.floor(Math.random() * (j + 1)); var tmp = a[j]; a[j] = a[r]; a[r] = tmp; } return a; }
+  function startRun(kind, target, keys){
+    if (!keys) { var ord = S.shuffle ? shuffled(20) : range(20); keys = ord.map(String); }
+    S.run = {kind: kind, target: target || "", keys: keys, pos: 0, answers: {}}; save();
+  }
+  function runQuestion(key){ if (/^\d+$/.test(key)) return ITEMS[Number(key)]; return FOLLOW[key[0]][Number(key[1])]; }
+  function runSubject(){ if (!S.run) return t("me"); return S.run.kind === "guess" ? (S.run.target || t("someone")) : t("me"); }
+  function runHtml(){
+    var run = S.run, total = run.keys.length, key = run.keys[run.pos], q = runQuestion(key), v = run.answers[key] || 0;
+    var answered = run.keys.filter(function(k){ return run.answers[k]; }).length;
+    var subject = runSubject();
+    var eyebrow = run.kind === "guess" ? t("likeThem", {name: esc(run.target || t("someone"))}) : run.kind === "follow" ? t("followTitle") + " · " + t("likeYou") : t("likeYou");
+    var h = '<div class="progress"><div class="progress-row"><span>' + t("qOf", {n: run.pos + 1, total: total}) + '</span><span>' + (answered ? t("answered", {n: answered}) : "") + '</span></div><div class="bar"><i style="width:' + Math.round(answered / total * 100) + '%"></i></div></div>';
+    h += '<div class="card"><div class="eyebrow">' + eyebrow + '</div><p class="statement">' + esc(quote(itemText(q))) + '</p><ul class="opts" id="opts">';
+    [1,2,3,4].forEach(function(c){ h += '<li><button type="button" class="opt" data-v="' + c + '" aria-pressed="' + (v === c) + '"><span class="k">' + c + '</span><span class="t"><span>' + esc(choiceLabel(c, subject)) + '</span><small>' + t("s" + c) + '</small></span></button></li>'; });
+    h += '</ul><div class="nav">' + btn("prev", t("prev"), "ghost") + '<button class="btn primary" type="button" id="next"' + (v ? "" : " disabled") + '>' + (run.pos === total - 1 ? (run.kind === "me" ? t("seeResult") : t("finish")) : t("next")) + '</button></div></div>';
+    return h;
+  }
+  function bindRun(){
+    var run = S.run;
+    $("opts").addEventListener("click", function(e){ var b = e.target.closest(".opt"); if (b) choose(Number(b.getAttribute("data-v"))); });
+    on("prev", runPrev); on("next", runNext);
+    $("prev").disabled = run.pos === 0;
+  }
+  function choose(v){ var run = S.run; if (!run) return; run.answers[run.keys[run.pos]] = v; save(); render(); setTimeout(runNext, 220); }
+  function runPrev(){ var run = S.run; if (run && run.pos > 0) { run.pos--; save(); render(); } }
+  function runNext(){
+    var run = S.run; if (!run) return;
+    var key = run.keys[run.pos]; if (!run.answers[key]) return;
+    if (run.pos < run.keys.length - 1) { run.pos++; save(); render(); scrollToQuiz(); return; }
+    var missing = run.keys.findIndex(function(k){ return !run.answers[k]; });
+    if (missing >= 0) { run.pos = missing; save(); render(); toast(t("unanswered")); return; }
+    finishRun();
+  }
+  function scrollToQuiz(){ var el = document.querySelector(".progress"); if (el && el.getBoundingClientRect().top < 0) el.scrollIntoView({behavior: "smooth", block: "start"}); }
+  function finishRun(){
+    var run = S.run;
+    if (run.kind === "me") {
+      var answers = []; for (var i = 0; i < 20; i++) answers.push(run.answers[String(i)]);
+      S.me = {name: S.me && S.me.name || "", answers: answers, follow: {}, done: true, ts: Date.now()};
+      S.history.unshift({ts: S.me.ts, name: S.me.name, answers: answers}); if (S.history.length > 30) S.history.length = 30;
+      S.run = null; go("result");
+    } else if (run.kind === "guess") {
+      var ga = []; for (var j = 0; j < 20; j++) ga.push(run.answers[String(j)]);
+      S.guess = {target: run.target, answers: ga, done: true, ts: Date.now()};
+      S.run = null; go("guessDone");
+    } else {
+      var f = S.me.follow || {};
+      run.keys.forEach(function(k){ var tr = k[0]; f[tr] = f[tr] || [0,0,0]; f[tr][Number(k[1])] = run.answers[k]; });
+      S.me.follow = f; S.run = null; go("result"); toast(t("followDone"));
+    }
+  }
+  document.addEventListener("keydown", function(e){
+    if (!S.run || !$("opts") || e.target.closest("input, textarea, select")) return;
+    if (e.key >= "1" && e.key <= "4") { choose(Number(e.key)); return; }
+    if (e.target.closest("button, a, summary")) return;
+    if (e.key === "ArrowLeft") runPrev(); else if (e.key === "ArrowRight" || e.key === "Enter") runNext();
+  });
+
+  /* ============================== 視圖 ============================== */
+  function render(){
+    renderHeader();
+    var v = S.view, h = "";
+    if (S.run && (v === "home" || v === "quiz" || v === "follow" || v === "guessQuiz")) v = S.run.kind === "me" ? "home" : S.run.kind === "guess" ? "guessQuiz" : "follow";
+    if ((v === "result" || v === "card") && !(S.me && S.me.done)) v = "home";
+    if ((v === "follow" || v === "guessQuiz") && !S.run) v = "home";
+    if (v === "view" && !S.partner) v = "home";
+    if (v === "guessDone" && !(S.guess && S.guess.done)) v = "home";
+    switch (v) {
+      case "home": h = viewHome(); break;
+      case "result": h = viewResult(S.me, true); break;
+      case "view": h = viewResult(S.partner, false); break;
+      case "follow": h = runHtml(); break;
+      case "guessSetup": h = viewGuessSetup(); break;
+      case "guessQuiz": h = runHtml(); break;
+      case "guessDone": h = viewGuessDone(); break;
+      case "accuracy": h = viewAccuracy(); break;
+      case "compare": h = viewCompare(); break;
+      case "history": h = viewHistory(); break;
+      case "card": h = viewCard(); break;
+      default: h = viewHome();
+    }
+    app.innerHTML = h;
+    bind(v);
+  }
+
+  function viewHome(){
+    var h = "";
+    if (S.guessOfMe && !(S.me && S.me.done)) h += '<div class="notice">' + t("guessPending", {by: esc(S.guessOfMe.by || t("someone"))}) + '</div>';
+    if (S.me && S.me.done) {
+      var r = score(S.me.answers, S.me.follow);
+      h += '<div class="card"><div class="eyebrow">' + whoName(S.me) + '</div><h2>' + t("hasResult", {type: r.type + "-" + r.letters.N}) + '</h2><div class="actions">' + btn("b-result", t("myResult"), "primary") + btn("b-compare", t("compare")) + btn("b-guess", t("guess")) + btn("b-history", t("history")) + btn("b-redo", t("redo"), "ghost") + '</div></div>';
+      if (S.partner) h += '<div class="notice">' + t("partnerStored", {name: esc(S.partner.name || t("someone"))}) + ' ' + btn("b-view", t("seePartner", {name: esc(S.partner.name || t("someone"))}), "sm") + '</div>';
+      return h;
+    }
+    h += '<section class="card"><ul><li>' + t("introLi1") + '</li><li>' + t("introLi2") + '</li><li>' + t("introLi3") + '</li></ul>' +
+      '<div class="field"><label for="name">' + t("nameLabel") + '</label><input id="name" type="text" maxlength="20" autocomplete="off" placeholder="' + t("namePh") + '" value="' + esc(S.me && S.me.name || "") + '"></div>';
+    if (!S.run) h += '<label class="check"><input type="checkbox" id="shuffle"' + (S.shuffle ? " checked" : "") + '> ' + t("shuffle") + '</label><div class="row">' + btn("b-start", t("start"), "primary") + (S.history.length ? btn("b-history", t("history")) : "") + '</div>';
+    h += '</section>';
+    if (S.run && S.run.kind === "me") h += runHtml();
+    if (S.partner) h += '<div class="notice">' + t("partnerStored", {name: esc(S.partner.name || t("someone"))}) + ' ' + btn("b-view", t("seePartner", {name: esc(S.partner.name || t("someone"))}), "sm") + '</div>';
+    return h;
+  }
+
+  function lettersTable(r, cls){
+    var h = '<table><tr><th>' + t("letter") + '</th><th>' + t("meaning") + '</th><th class="c">' + t("sure") + '</th></tr>';
+    ["E","O","A","C","N"].forEach(function(tr){
+      var T = TRAITS[tr], Lt = r.letters[tr], meaning = tx(Lt === T.hi ? T.hiM : T.loM);
+      var mid = !r.refined[tr] && Math.abs(r.pct[tr] - 50) < 5;
+      h += '<tr><td class="l">' + (tr === "N" ? "-" : "") + Lt + '</td><td>' + meaning + '</td><td class="c"><span class="pill' + (mid ? " mid" : r.refined[tr] ? " warn" : "") + (cls ? " " + cls : "") + '">' + r.conf[tr] + '</span></td></tr>';
+    });
+    return h + '</table>';
+  }
+  function traitBars(p1, p2, name1, name2){
+    var r1 = score(p1.answers, p1.follow), r2 = p2 ? score(p2.answers, p2.follow) : null, h = "";
+    if (r2) h += '<div class="legend"><span><i style="background:var(--accent)"></i>' + name1 + '</span><span><i style="background:var(--accent2)"></i>' + name2 + '</span></div>';
+    h += '<div class="traits">';
+    ORDER.forEach(function(tr){
+      var a = shown(tr, r1.pct[tr]), b = r2 ? shown(tr, r2.pct[tr]) : null;
+      h += '<div class="trait"><span class="trait-name">' + trName(tr) + '<small>' + (L === "en" ? TRAITS[tr].zh : TRAITS[tr].en) + '</small></span><span class="trait-pct">' + a + '%' + (r2 ? '<span class="b">' + b + '%</span>' : "") + '</span>' +
+        '<div class="track"><div class="fill" style="width:' + a + '%"></div>' + (r2 ? '<div class="fill b" style="width:' + b + '%"></div>' : "") + '<div class="mid"></div></div>' +
+        (r2 ? "" : '<p class="trait-desc">' + TRAITS[tr].lv[L][level(a)] + '</p>') + '</div>';
+    });
+    return h + '</div>';
+  }
+
+  function viewResult(p, mine){
+    var r = score(p.answers, p.follow), who = whoName(p), h = "";
+    if (!mine) h += '<div class="notice">' + t("viewing", {name: who}) + '。' + t("viewingNote", {name: who}) + '</div>';
+    h += '<div class="type-card' + (mine ? "" : " b") + '"><div class="eyebrow">' + t("closest", {who: who}) + '</div><div class="type-letters' + (mine ? "" : " b") + '">' + r.type + '<span class="identity">-' + r.letters.N + '</span></div>' +
+      '<p>' + t("alt", {alt: r.altType, pair: TRAITS[r.weakest].hi + "／" + TRAITS[r.weakest].lo}) + '</p>' + lettersTable(r, mine ? "" : "b") + '</div>';
+    var ty = TYPES[r.type];
+    if (ty) h += '<div class="card"><h3>' + t("typeIntro", {type: r.type}) + '</h3><p>' + ty[L][0] + '</p><p class="muted small">' + t("myth") + ty[L][1] + '</p></div>';
+    if (mine && r.midline.length) h += '<div class="notice warn">' + t("followCta", {n: r.midline.length, list: r.midline.map(trName).join(sep()), m: r.midline.length * 3}) + ' ' + btn("b-follow", t("followBtn"), "sm primary") + '</div>';
+    h += '<h2>' + t("big5") + '</h2>' + traitBars(p) + '<p class="note">' + t("scaleNote") + '</p>';
+    h += '<h2>' + t("tension", {who: who}) + '</h2>';
+    if (r.obs.length) { h += '<p class="muted">' + t("tensionIntro") + '</p><ul class="obs">'; r.obs.forEach(function(o){ h += '<li' + (mine ? "" : ' class="b"') + '><b>' + (o.tr === "N" ? t("emotion") : trName(o.tr)) + '</b>' + (L === "en" ? ": " : "：") + o.hiSide.join(sep()) + t("butAlso") + o.loSide.join(sep()) + (L === "en" ? "." : "。") + '</li>'; }); h += '</ul>'; }
+    else h += '<p class="muted">' + t("tensionNone") + '</p>';
+    h += '<div class="actions">';
+    if (mine) h += btn("b-link", t("copyLink"), "primary") + btn("b-copy", t("copyText")) + btn("b-card", t("card")) + btn("b-guess", t("guess")) + btn("b-compare", t("compare")) + btn("b-history", t("history")) + btn("b-redo", t("redo"), "ghost");
+    else h += (S.me && S.me.done ? btn("b-compare", t("compareMine"), "primary") : btn("b-home", t("takeToo"), "primary")) + btn("b-guess-them", t("guessThem", {name: who})) + btn("b-home2", t("home"), "ghost");
+    h += '</div>';
+    h += '<details><summary>' + t("record") + '</summary><div class="tbl"><table><tr><th>#</th><th>' + t("q") + '</th><th class="c">' + t("ans") + '</th></tr>';
+    ITEMS.forEach(function(it, i){ h += '<tr><td class="c">' + (i + 1) + '</td><td>' + esc(itemText(it)) + '</td><td class="c">' + esc(choiceLabel(p.answers[i], t("me"))) + '</td></tr>'; });
+    h += '</table></div></details><p class="note">' + t("scoring") + '</p>';
+    return h;
+  }
+  function resultText(p){
+    var r = score(p.answers, p.follow), lines = [t("title") + "｜" + (p.name || "-"), r.type + "-" + r.letters.N + " (" + r.altType + ")"];
+    lines.push(ORDER.map(function(tr){ return trName(tr) + " " + shown(tr, r.pct[tr]) + "%"; }).join("｜"));
+    lines.push(["E","O","A","C","N"].map(function(tr){ return (tr === "N" ? "-" : "") + r.letters[tr] + " " + r.conf[tr]; }).join("／"));
+    r.obs.forEach(function(o){ lines.push((o.tr === "N" ? t("emotion") : trName(o.tr)) + ": " + o.hiSide.join(sep()) + t("butAlso") + o.loSide.join(sep())); });
+    lines.push(resultLink(p));
+    return lines.join("\n");
+  }
+
+  function viewGuessSetup(){
+    var def = S.partner && S.partner.name || (S.guess && S.guess.target) || "";
+    return '<div class="card"><h2>' + t("guessSetupTitle") + '</h2><p>' + t("guessSetupText") + '</p><div class="field"><label for="target">' + t("targetLabel") + '</label><input id="target" type="text" maxlength="20" placeholder="' + t("targetPh") + '" value="' + esc(def) + '"></div><div class="row">' + btn("b-start-guess", t("startGuess"), "primary") + btn("b-back", t("back"), "ghost") + '</div></div>';
+  }
+  function viewGuessDone(){
+    var g = S.guess, name = esc(g.target || t("someone"));
+    var can = S.partner && S.partner.answers;
+    return '<div class="card"><h2>' + t("guessDoneTitle", {name: name}) + '</h2><p>' + t("guessDoneText", {name: name}) + '</p><div class="actions">' + btn("b-glink", t("copyGuessLink"), "primary") + (can ? btn("b-acc", t("seeAccuracy")) : "") + btn("b-result", t("myResult"), "ghost") + '</div>' + (can ? "" : '<p class="note">' + t("accuracyWaiting", {name: name}) + '</p>') + '</div>';
+  }
+
+  function accuracyBlock(by, target, guessAns, actual, actualPerson){
+    var exact = 0, near = 0, misses = [];
+    for (var i = 0; i < 20; i++) { var d = Math.abs(guessAns[i] - actual[i]); if (d === 0) exact++; if (d <= 1) near++; if (d >= 2) misses.push({i: i, d: d}); }
+    misses.sort(function(a, b){ return b.d - a.d; });
+    var rg = score(guessAns), ra = score(actual, actualPerson && actualPerson.follow);
+    var h = '<div class="card"><h3>' + t("accHead", {by: esc(by), target: esc(target)}) + '</h3><div class="row"><span class="pill">' + t("accExact", {n: exact}) + '</span><span class="pill mid">' + t("accNear", {n: near}) + '</span></div>' +
+      '<div class="eyebrow">' + t("accTrait") + '</div><table><tr><th></th><th class="num">' + t("guessed") + '</th><th class="num">' + t("actual") + '</th><th class="num">' + t("diffCol") + '</th></tr>';
+    ORDER.forEach(function(tr){ var g = shown(tr, rg.pct[tr]), a = shown(tr, ra.pct[tr]), d = g - a; h += '<tr><td>' + trName(tr) + '</td><td class="num">' + g + '%</td><td class="num">' + a + '%</td><td class="num">' + (d > 0 ? "+" : "") + d + '</td></tr>'; });
+    h += '</table><div class="eyebrow">' + t("accMiss") + '</div>';
+    if (misses.length) { h += '<ul class="miss">'; misses.forEach(function(m){ var it = ITEMS[m.i]; h += '<li>' + esc(quote(itemText(it))) + '<div class="vs"><span class="pill b">' + t("guessed") + (L === "en" ? ": " : "：") + esc(choiceLabel(guessAns[m.i], target)) + '</span><span class="pill">' + t("actual") + (L === "en" ? ": " : "：") + esc(choiceLabel(actual[m.i], target)) + '</span></div></li>'; }); h += '</ul>'; }
+    else h += '<p class="muted small">' + t("accMissNone") + '</p>';
+    return h + '</div>';
+  }
+  function viewAccuracy(){
+    var h = '<h2>' + t("accTitle") + '</h2>', any = false;
+    var meName = S.me && S.me.name || t("you");
+    if (S.guess && S.guess.done && S.partner) { any = true; h += accuracyBlock(meName, S.partner.name || S.guess.target || t("someone"), S.guess.answers, S.partner.answers, S.partner); }
+    if (S.guessOfMe && S.me && S.me.done) { any = true; h += accuracyBlock(S.guessOfMe.by || t("someone"), meName, S.guessOfMe.answers, S.me.answers, S.me); }
+    if (!any) h += '<div class="card"><p>' + t("accNone") + '</p><ol><li>' + t("accHow1") + '</li><li>' + t("accHow2") + '</li></ol></div>';
+    h += '<div class="actions">' + btn("b-compare", t("compare")) + btn("b-result", t("myResult"), "ghost") + btn("b-home", t("home"), "ghost") + '</div>';
+    return h;
+  }
+
+  function pasteBox(){ return '<div class="card"><div class="field"><label for="paste">' + t("pasteLabel") + '</label><div class="field inline"><input id="paste" type="url" placeholder="' + t("pastePh") + '">' + btn("b-import", t("importBtn")) + '</div></div></div>'; }
+  function viewCompare(){
+    var h = '<h2>' + t("cmpTitle") + '</h2>';
+    if (!(S.me && S.me.done)) return h + '<div class="notice">' + t("cmpNeedMe") + '</div><div class="actions">' + btn("b-home", t("home"), "primary") + '</div>';
+    if (!S.partner) return h + '<div class="notice">' + t("cmpNeedPartner") + '</div>' + pasteBox() + '<div class="actions">' + btn("b-result", t("myResult"), "ghost") + '</div>';
+    var me = S.me, pt = S.partner, r1 = score(me.answers, me.follow), r2 = score(pt.answers, pt.follow), n1 = whoName(me), n2 = pt.name ? esc(pt.name) : t("someone");
+    h += '<div class="card"><div class="row" style="justify-content:space-between"><div><div class="eyebrow">' + n1 + '</div><div class="type-letters" style="font-size:2.2rem">' + r1.type + '<span class="identity">-' + r1.letters.N + '</span></div></div><div><div class="eyebrow">' + n2 + '</div><div class="type-letters b" style="font-size:2.2rem">' + r2.type + '<span class="identity">-' + r2.letters.N + '</span></div></div></div>' +
+      '<table><tr><th>' + t("group") + '</th><th class="c">' + n1 + '</th><th class="c">' + n2 + '</th><th class="c"></th></tr>';
+    var same = [], diff = [];
+    ["E","O","A","C","N"].forEach(function(tr){ var a = r1.letters[tr], b = r2.letters[tr], eq = a === b; if (tr !== "N") (eq ? same : diff).push(tr); h += '<tr><td>' + tx(TRAITS[tr].q) + '</td><td class="c l">' + (tr === "N" ? "-" : "") + a + '</td><td class="c l">' + (tr === "N" ? "-" : "") + b + '</td><td class="c"><span class="pill' + (eq ? " mid" : " b") + '">' + (eq ? t("same") : t("diff")) + '</span></td></tr>'; });
+    h += '</table></div>';
+    h += '<h2>' + t("big5") + '</h2>' + traitBars(me, pt, n1, n2);
+    var gaps = ORDER.map(function(tr){ return {tr: tr, g: Math.abs(shown(tr, r1.pct[tr]) - shown(tr, r2.pct[tr]))}; }).sort(function(a, b){ return b.g - a.g; });
+    var sum = same.length ? t("sameLetters", {list: same.map(function(tr){ return r1.letters[tr]; }).join(sep())}) : "";
+    if (!diff.length) sum += " " + t("diffNone");
+    if (gaps[0].g >= 25) sum += " " + t("biggestGap", {trait: trName(gaps[0].tr), g: gaps[0].g});
+    h += '<div class="notice">' + sum + " " + t("sameNote") + '</div>';
+    var hintTr = diff.slice(); if (r1.letters.N !== r2.letters.N) hintTr.push("N");
+    if (hintTr.length) { h += '<h2>' + t("hintsTitle") + '</h2><ul class="obs">'; hintTr.forEach(function(tr){ h += '<li class="b"><b>' + r1.letters[tr] + " / " + r2.letters[tr] + '</b>' + (L === "en" ? ": " : "：") + tx(HINTS[tr]) + '</li>'; }); h += '</ul>'; }
+    h += '<div class="actions">' + btn("b-acc", t("accTitle")) + btn("b-guess", t("guessThem", {name: n2})) + btn("b-result", t("myResult"), "ghost") + btn("b-replace", t("replacePartner"), "ghost") + '</div>' + pasteBox();
+    return h;
+  }
+
+  function fmtDate(ts){ var d = new Date(ts); return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); }
+  function viewHistory(){
+    var h = '<h2>' + t("histTitle") + '</h2>';
+    if (!S.history.length) return h + '<p class="muted">' + t("histNone") + '</p><div class="actions">' + btn("b-home", t("home"), "ghost") + '</div>';
+    h += '<p class="note">' + t("histDelta") + ' ' + t("histNote") + '</p><div class="tbl"><table><tr><th>' + t("histDate") + '</th><th>' + t("histType") + '</th>';
+    ORDER.forEach(function(tr){ h += '<th class="num">' + trShort(tr) + '</th>'; });
+    h += '<th></th></tr>';
+    S.history.forEach(function(rec, i){
+      var r = score(rec.answers), prev = S.history[i + 1] ? score(S.history[i + 1].answers) : null;
+      h += '<tr><td class="c">' + fmtDate(rec.ts) + '</td><td class="l">' + r.type + '</td>';
+      ORDER.forEach(function(tr){ var v = shown(tr, r.pct[tr]), d = prev ? v - shown(tr, prev.pct[tr]) : null; h += '<td class="num">' + v + (d === null ? "" : ' <span class="muted">(' + (d > 0 ? "+" : "") + d + ')</span>') + '</td>'; });
+      h += '<td class="c"><button class="btn sm ghost" type="button" data-del="' + i + '">' + t("del") + '</button></td></tr>';
+    });
+    h += '</table></div><div class="actions">' + btn("b-result", t("myResult")) + btn("b-home", t("home"), "ghost") + '</div>';
+    return h;
+  }
+
+  function viewCard(){ return '<h2>' + t("cardTitle") + '</h2><p class="note">' + t("cardNote") + '</p><div class="cardimg" id="cardimg"></div><div class="actions"><a class="btn primary" id="b-dl" download="' + t("title") + '.png" href="#">' + t("download") + '</a>' + btn("b-result", t("back"), "ghost") + '</div>'; }
+  function drawCard(p){
+    var r = score(p.answers, p.follow), W = 1080, H = 1350, c = document.createElement("canvas"); c.width = W; c.height = H;
+    var ctx = c.getContext("2d");
+    var serif = '"Noto Serif TC","Songti TC","PMingLiU",serif', sans = '"Noto Sans TC","Microsoft JhengHei","PingFang TC",sans-serif';
+    ctx.fillStyle = "#F3F5F2"; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = "#FFFFFF"; roundRect(ctx, 60, 60, W - 120, H - 120, 28); ctx.fill();
+    ctx.fillStyle = "#5E6A66"; ctx.font = "500 26px " + sans; ctx.fillText(t("eyebrow"), 120, 150);
+    ctx.fillStyle = "#1C2321"; ctx.font = "700 48px " + serif; ctx.fillText(p.name || t("title"), 120, 215);
+    ctx.fillStyle = "#1F5F5B"; ctx.font = "700 190px " + serif; ctx.fillText(r.type, 120, 420);
+    var tw = ctx.measureText(r.type).width; ctx.fillStyle = "#5E6A66"; ctx.font = "700 72px " + serif; ctx.fillText("-" + r.letters.N, 120 + tw + 16, 420);
+    ctx.fillStyle = "#5E6A66"; ctx.font = "400 30px " + sans; ctx.fillText(t("alt", {alt: r.altType, pair: TRAITS[r.weakest].hi + "/" + TRAITS[r.weakest].lo}).replace(/<[^>]+>/g, ""), 120, 480);
+    var y = 580;
+    ORDER.forEach(function(tr){
+      var v = shown(tr, r.pct[tr]);
+      ctx.fillStyle = "#1C2321"; ctx.font = "500 34px " + sans; ctx.fillText(trName(tr), 120, y);
+      ctx.fillStyle = "#1F5F5B"; ctx.font = "700 34px " + sans; ctx.textAlign = "right"; ctx.fillText(v + "%", W - 120, y); ctx.textAlign = "left";
+      ctx.fillStyle = "#E3E8E5"; roundRect(ctx, 120, y + 22, W - 240, 22, 11); ctx.fill();
+      ctx.fillStyle = "#1F5F5B"; roundRect(ctx, 120, y + 22, Math.max(22, (W - 240) * v / 100), 22, 11); ctx.fill();
+      ctx.fillStyle = "#5E6A66"; ctx.font = "400 26px " + sans; ctx.fillText(TRAITS[tr].lv[L][level(v)], 120, y + 84);
+      y += 130;
+    });
+    ctx.fillStyle = "#5E6A66"; ctx.font = "400 26px " + sans; ctx.fillText(t("cardDate") + " " + fmtDate(p.ts || Date.now()), 120, H - 110);
+    ctx.textAlign = "right"; ctx.fillText(baseUrl().replace(/^https?:\/\//, ""), W - 120, H - 110); ctx.textAlign = "left";
+    return c;
+  }
+  function roundRect(ctx, x, y, w, h, r){ ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+
+  /* ============================== 綁定 ============================== */
+  function bind(v){
+    var nameEl = $("name"); if (nameEl) nameEl.addEventListener("input", function(){ S.me = S.me || {name: "", answers: [], follow: {}, done: false}; S.me.name = nameEl.value.trim(); save(); });
+    var sh = $("shuffle"); if (sh) sh.addEventListener("change", function(){ S.shuffle = sh.checked; save(); });
+    if ($("opts")) bindRun();
+    on("b-start", function(){ startRun("me"); render(); scrollToQuiz(); });
+    on("b-result", function(){ go("result"); });
+    on("b-view", function(){ go("view"); });
+    on("b-home", function(){ go("home"); }); on("b-home2", function(){ go("home"); });
+    on("b-back", function(){ go(S.me && S.me.done ? "result" : "home"); });
+    on("b-compare", function(){ go("compare"); });
+    on("b-history", function(){ go("history"); });
+    on("b-acc", function(){ go("accuracy"); });
+    on("b-guess", function(){ go("guessSetup"); });
+    on("b-guess-them", function(){ go("guessSetup"); });
+    on("b-start-guess", function(){ var tg = ($("target").value || "").trim(); startRun("guess", tg); go("guessQuiz"); });
+    on("b-glink", function(){ copyText(guessLink(S.guess, S.me && S.me.name || ""), t("linkCopied")); });
+    on("b-link", function(){ copyText(resultLink(S.me), t("linkCopied")); });
+    on("b-copy", function(){ copyText(resultText(S.me)); });
+    on("b-follow", function(){ var r = score(S.me.answers, S.me.follow), keys = []; r.midline.forEach(function(tr){ keys.push(tr + "0", tr + "1", tr + "2"); }); startRun("follow", "", keys); go("follow"); });
+    on("b-redo", function(){ if (!confirm(t("resetConfirm"))) return; S.me = {name: S.me && S.me.name || "", answers: [], follow: {}, done: false}; S.run = null; go("home"); });
+    on("b-replace", function(){ S.partner = null; go("compare"); });
+    on("b-import", function(){ if (importLink($("paste").value)) render(); });
+    on("b-card", function(){ go("card"); });
+    Array.prototype.forEach.call(app.querySelectorAll("[data-del]"), function(b){ b.addEventListener("click", function(){ S.history.splice(Number(b.getAttribute("data-del")), 1); save(); render(); }); });
+    if (v === "card") {
+      var draw = function(){ var c = drawCard(S.me), url = c.toDataURL("image/png"); var img = new Image(); img.src = url; img.alt = t("cardTitle"); $("cardimg").innerHTML = ""; $("cardimg").appendChild(img); $("b-dl").href = url; };
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw, draw); else draw();
+    }
+  }
+
+  /* ============================== 啟動 ============================== */
+  if (location.hash.length > 1) { if (importLink(location.hash, true)) { try { history.replaceState(null, "", baseUrl()); } catch (e) {} } }
+  if (S.run && S.run.kind === "me") S.view = "home";
+  render();
 })();
 </script>
 
