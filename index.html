@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>人格二十題</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap">
+<style>
+:root{
+  --bg:#F3F5F2; --surface:#FFFFFF; --ink:#1C2321; --muted:#5E6A66; --line:#D5DBD8; --track:#E3E8E5;
+  --accent:#1F5F5B; --accent-ink:#FFFFFF; --accent-soft:#E1EEEC;
+  --accent2:#8A4B5E; --accent2-soft:#F1E3E7;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","Microsoft JhengHei","PingFang TC",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141A18; --surface:#1D2523; --ink:#E8ECEA; --muted:#9AA6A1; --line:#2E3835; --track:#2A3431;
+    --accent:#6FC2B9; --accent-ink:#0F1F1D; --accent-soft:#1F3532;
+    --accent2:#D48CA2; --accent2-soft:#3A2630;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141A18; --surface:#1D2523; --ink:#E8ECEA; --muted:#9AA6A1; --line:#2E3835; --track:#2A3431;
+  --accent:#6FC2B9; --accent-ink:#0F1F1D; --accent-soft:#1F3532;
+  --accent2:#D48CA2; --accent2-soft:#3A2630;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;padding-inline:16px;padding-block:28px 64px}
+.wrap{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{margin:0;font-family:var(--serif);font-weight:700;text-wrap:balance;line-height:1.3}
+h1{font-size:2rem;letter-spacing:.02em}
+h2{font-size:1.25rem;margin-top:8px}
+p{margin:0}
+.eyebrow{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.muted{color:var(--muted)}
+.brand{display:flex;flex-direction:column;gap:6px}
+.lede{font-size:1rem;color:var(--muted);max-width:34em}
+.intro{display:flex;flex-direction:column;gap:14px;padding:18px 20px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.intro ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:4px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:.9rem;font-weight:500}
+.field input{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+.field input:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.progress{display:flex;flex-direction:column;gap:8px}
+.progress-row{display:flex;justify-content:space-between;font-size:.9rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{height:6px;background:var(--track);border-radius:999px;overflow:hidden}
+.bar > i{display:block;height:100%;background:var(--accent);border-radius:999px;transition:width .25s ease}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 20px;display:flex;flex-direction:column;gap:18px}
+.statement{font-family:var(--serif);font-size:1.3rem;line-height:1.55;font-weight:600}
+.opts{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.opt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 14px;cursor:pointer;transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--accent)}
+.opt .k{flex:0 0 auto;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:.8rem;font-weight:700;background:var(--track);color:var(--muted);font-variant-numeric:tabular-nums}
+.opt .t{display:flex;flex-direction:column;line-height:1.35}
+.opt .t small{color:var(--muted);font-size:.8rem}
+.opt[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.opt[aria-pressed="true"] .k{background:var(--accent);color:var(--accent-ink)}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.btn{font:inherit;font-weight:500;border-radius:10px;padding:10px 16px;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.ghost{border-color:transparent;color:var(--muted)}
+
+.type-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 20px;display:flex;flex-direction:column;gap:14px}
+.type-letters{font-family:var(--serif);font-size:3.4rem;font-weight:700;letter-spacing:.08em;line-height:1.1;color:var(--accent)}
+.type-letters .identity{font-size:1.6rem;letter-spacing:.02em;color:var(--muted);margin-left:.15em}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:500;color:var(--muted);font-size:.8rem;letter-spacing:.06em}
+td.l{font-family:var(--serif);font-weight:700;font-size:1.05rem;white-space:nowrap}
+td.c{white-space:nowrap}
+.pill{display:inline-block;padding:1px 8px;border-radius:999px;font-size:.78rem;background:var(--accent-soft);color:var(--accent);font-weight:500}
+.pill.mid{background:var(--track);color:var(--muted)}
+
+.traits{display:flex;flex-direction:column;gap:14px}
+.trait{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:baseline}
+.trait-name{font-weight:500}
+.trait-name small{color:var(--muted);font-weight:400;margin-left:6px;font-size:.8rem}
+.trait-pct{font-variant-numeric:tabular-nums;font-weight:700;color:var(--accent)}
+.trait-pct .cmp{display:none;color:var(--accent2);font-weight:500;margin-left:8px}
+.track{grid-column:1 / -1;position:relative;height:10px;background:var(--track);border-radius:999px;overflow:hidden}
+.track .fill{position:absolute;inset:0 auto 0 0;background:var(--accent);border-radius:999px}
+.track .fill.cmp{display:none;background:var(--accent2);opacity:.85;height:4px;top:auto;bottom:0}
+.track .mid{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--surface)}
+.trait-desc{grid-column:1 / -1;font-size:.93rem;color:var(--muted)}
+.result.compare .trait-pct .cmp,.result.compare .track .fill.cmp{display:inline}
+.result.compare .track .fill.cmp{display:block}
+.legend{display:none;gap:16px;font-size:.85rem;color:var(--muted);flex-wrap:wrap}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:6px}
+.result.compare .legend{display:flex}
+.cmp-note{display:none;padding:14px 16px;border-radius:12px;background:var(--accent2-soft);color:var(--ink);font-size:.95rem}
+.result.compare .cmp-note{display:block}
+
+.obs{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
+.obs li{padding:14px 16px;border-left:3px solid var(--accent);background:var(--surface);border-radius:0 12px 12px 0;font-size:.95rem}
+.obs li b{font-family:var(--serif)}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+details{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:0 16px}
+summary{cursor:pointer;padding:12px 0;font-weight:500}
+details table{margin-bottom:12px}
+.note{font-size:.85rem;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:999px;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.show{opacity:1}
+.result{display:flex;flex-direction:column;gap:22px}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="brand">
+    <div class="eyebrow">五大人格 · 二十題情境版</div>
+    <h1>人格二十題</h1>
+    <p class="lede">用二十個生活情境，判斷「像不像我」，就能得到五大人格特質分數，以及對應的四個字母。</p>
+  </header>
+
+  <section class="intro" id="intro">
+    <ul>
+      <li>每題只要憑直覺選「像不像我」，沒有對錯。</li>
+      <li>大約三分鐘。中途離開，下次打開會接著作答。</li>
+      <li>結果會給五項特質的分數、四個字母的把握程度，還有你答案裡的內在拉扯。</li>
+    </ul>
+    <div class="field">
+      <label for="name">你的名字（選填，會出現在結果上）</label>
+      <input id="name" type="text" maxlength="20" autocomplete="off" placeholder="例如：小美">
+    </div>
+  </section>
+
+  <section id="quiz" class="quiz">
+    <div class="progress">
+      <div class="progress-row"><span id="p-text">第 1 題 / 20</span><span id="p-done"></span></div>
+      <div class="bar"><i id="p-fill" style="width:0%"></i></div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <div class="eyebrow">這句話像你嗎？</div>
+      <p class="statement" id="statement"></p>
+      <ul class="opts" id="opts"></ul>
+      <div class="nav">
+        <button class="btn ghost" id="prev" type="button">上一題</button>
+        <button class="btn primary" id="next" type="button" disabled>下一題</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="result" class="result" hidden></section>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  'use strict';
+  var ITEMS = [
+    {t:'週五晚上，比起在家安靜休息，我更想找朋友出去聚。', tr:'E', k:1,  a:'週五想找朋友聚', d:'週五寧願在家休息'},
+    {t:'我喜歡嘗試沒吃過的料理、沒去過的地方、沒聽過的音樂。', tr:'O', k:1,  a:'喜歡嘗鮮', d:'不太愛嘗鮮'},
+    {t:'出門或開始做事前，我會先列清單或在腦中排好順序，很少想到什麼做什麼。', tr:'C', k:1, a:'做事前會先排好順序', d:'常常想到什麼做什麼'},
+    {t:'朋友心情不好時，我很容易跟著感受到他的情緒。', tr:'A', k:1,  a:'容易被朋友的情緒感染', d:'不太被別人的情緒帶走'},
+    {t:'事情還沒發生，我就常常先想到最壞的情況。', tr:'N', k:1,  a:'事前會先想最壞情況', d:'不太預想壞結果'},
+    {t:'在聚會裡，我通常是先開口和陌生人聊天的那個人。', tr:'E', k:1,  a:'會主動和陌生人開口', d:'不主動和陌生人搭話'},
+    {t:'我常會為了搞懂「這個東西到底怎麼運作」而查資料查到忘記時間。', tr:'O', k:1, a:'會為了搞懂原理查到忘記時間', d:'對原理沒那麼追根究柢'},
+    {t:'交代給我的事，我通常會提前完成，而不是拖到最後一刻。', tr:'C', k:1, a:'會提前完成', d:'常拖到最後一刻'},
+    {t:'做決定時，我會很在意這個決定會不會讓別人不舒服。', tr:'A', k:1,  a:'很在意決定會不會讓人不舒服', d:'決定時不太顧慮別人的感受'},
+    {t:'被人批評後，我會反覆想好幾天。', tr:'N', k:1,  a:'被批評後會想好幾天', d:'被批評後很快放下'},
+    {t:'跟一群人相處一整天後，我需要獨處一段時間才能恢復精神。', tr:'E', k:-1, a:'社交後需要獨處恢復', d:'社交後不需要特別恢復'},
+    {t:'我偏好熟悉、有把握的做法，不太想換新的方式。', tr:'O', k:-1, a:'偏好熟悉的做法', d:'願意換新的做法'},
+    {t:'我的桌面、房間或電腦檔案常常很亂，但我自己找得到就好。', tr:'C', k:-1, a:'環境亂也無所謂', d:'環境會保持整齊'},
+    {t:'討論時我會直接指出對方的邏輯錯誤，就算場面變得有點尷尬。', tr:'A', k:-1, a:'會直接指出別人的邏輯錯誤', d:'不會當面指出錯誤'},
+    {t:'遇到突發狀況時，我通常能保持冷靜，不太慌。', tr:'N', k:-1, a:'突發狀況能保持冷靜', d:'突發狀況容易慌'},
+    {t:'開會或上課時，我傾向安靜聽，不太主動發言。', tr:'E', k:-1, a:'開會傾向安靜聽', d:'開會會主動發言'},
+    {t:'談抽象的想法或理論會讓我覺得無聊，我比較在意實際能用的東西。', tr:'O', k:-1, a:'覺得抽象理論無聊', d:'喜歡談抽象的想法'},
+    {t:'計畫臨時被打亂時，我其實覺得無所謂，隨機應變就好。', tr:'C', k:-1, a:'計畫被打亂也無所謂', d:'討厭計畫被打亂'},
+    {t:'我覺得「對事不對人」比「顧慮大家感受」更重要。', tr:'A', k:-1, a:'對事不對人優先', d:'顧慮大家感受優先'},
+    {t:'我的心情大部分時間都蠻平穩的，很少大起大落。', tr:'N', k:-1, a:'心情平穩', d:'心情起伏大'}
+  ];
+  var CHOICES = [
+    {v:1, l:'完全不像我', s:'幾乎從來不會這樣'},
+    {v:2, l:'不太像我',   s:'偶爾會，但多數時候不是'},
+    {v:3, l:'有點像我',   s:'多數時候是這樣'},
+    {v:4, l:'非常像我',   s:'幾乎每次都這樣'}
+  ];
+  var TRAITS = {
+    E:{name:'外向性', en:'Extraversion', hi:'E', lo:'I', q:'能量從哪裡來',
+       hiM:'跟人互動會充電', loM:'靠獨處充電',
+       lv:['偏內向。靠獨處充電，社交後需要時間恢復。','中間型。看場合，有時想找人，有時想獨處。','偏外向。跟人互動會充電，樂於主動開口。']},
+    O:{name:'開放性', en:'Openness', hi:'N', lo:'S', q:'怎麼接收資訊',
+       hiM:'喜歡概念和可能性', loM:'相信經驗和事實',
+       lv:['偏務實。相信驗證過的做法，重視實際能用的東西。','中間型。有選擇地嘗新，熟悉和新奇各占一半。','偏探索。喜歡新奇、抽象和背後的意義。']},
+    C:{name:'盡責性', en:'Conscientiousness', hi:'J', lo:'P', q:'怎麼面對外在世界',
+       hiM:'喜歡事情有定案', loM:'喜歡保留彈性',
+       lv:['偏隨性。喜歡保留彈性，事情到最後再決定也沒關係。','中間型。有計畫但不僵硬，被打亂也能調整。','偏規劃。會事先安排、重視承諾，不喜歡計畫被打亂。']},
+    A:{name:'親和性', en:'Agreeableness', hi:'F', lo:'T', q:'怎麼做決定',
+       hiM:'決定時先看對人的影響', loM:'決定時先看邏輯',
+       lv:['偏邏輯。對事不對人，能接受講出來會有點不舒服的事實。','中間型。邏輯和感受輪流上場，視情況決定。','偏和諧。很在意別人的感受，決定時先看對人的影響。']},
+    N:{name:'情緒穩定度', en:'Emotional Stability', hi:'T', lo:'A', q:'身分（16personalities 附加）',
+       hiM:'動盪型：較敏感、會自我檢討', loM:'自信型：情緒穩定、不太自我懷疑',
+       lv:['情緒起伏較大。容易擔心，被批評後會反芻。','中間型。事前會想，但當下多半冷靜。','情緒穩定。不太擔心，遇事冷靜，很快放下。']}
+  };
+  var ORDER = ['E','O','C','A','N'];
+  var JUSTIN = {name:'Justin', pct:{E:8,O:42,C:67,A:50,N:50}, letters:{E:'I',O:'S',A:'T',C:'J',N:'T'}};
+
+  var KEY = 'p20-state-v1';
+  var state = {name:'', answers:[], idx:0, done:false};
+  try {
+    var saved = JSON.parse(localStorage.getItem(KEY) || 'null');
+    if (saved && Array.isArray(saved.answers)) state = saved;
+  } catch (e) {}
+  if (!Array.isArray(state.answers)) state.answers = [];
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+  var $ = function(id){ return document.getElementById(id); };
+  var nameEl = $('name'), quizEl = $('quiz'), resultEl = $('result'), introEl = $('intro');
+  nameEl.value = state.name || '';
+  nameEl.addEventListener('input', function(){ state.name = nameEl.value.trim(); save(); });
+
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  function renderQuiz(){
+    var i = state.idx, item = ITEMS[i], v = state.answers[i] || 0;
+    var answered = state.answers.filter(Boolean).length;
+    $('p-text').textContent = '第 ' + (i+1) + ' 題 / ' + ITEMS.length;
+    $('p-done').textContent = answered ? '已答 ' + answered + ' 題' : '';
+    $('p-fill').style.width = Math.round(answered / ITEMS.length * 100) + '%';
+    $('statement').textContent = '「' + item.t + '」';
+    var html = '';
+    CHOICES.forEach(function(c){
+      html += '<li><button type="button" class="opt" data-v="' + c.v + '" aria-pressed="' + (v===c.v) + '">' +
+              '<span class="k">' + c.v + '</span><span class="t"><span>' + c.l + '</span><small>' + c.s + '</small></span></button></li>';
+    });
+    $('opts').innerHTML = html;
+    $('prev').disabled = i === 0;
+    var next = $('next');
+    next.disabled = !v;
+    next.textContent = (i === ITEMS.length - 1) ? '看結果' : '下一題';
+  }
+
+  function choose(v){
+    state.answers[state.idx] = v;
+    save();
+    renderQuiz();
+    setTimeout(goNext, 220);
+  }
+  function goNext(){
+    if (!state.answers[state.idx]) return;
+    if (state.idx < ITEMS.length - 1) { state.idx++; save(); renderQuiz(); scrollToQuiz(); }
+    else if (state.answers.filter(Boolean).length === ITEMS.length) { state.done = true; save(); showResult(); }
+    else {
+      var first = state.answers.findIndex(function(a, k){ return k < ITEMS.length && !a; });
+      state.idx = first; save(); renderQuiz(); toast('還有題目沒作答，先補上這一題');
+    }
+  }
+  function goPrev(){ if (state.idx > 0) { state.idx--; save(); renderQuiz(); } }
+  function scrollToQuiz(){ var r = quizEl.getBoundingClientRect(); if (r.top < 0) quizEl.scrollIntoView({behavior:'smooth', block:'start'}); }
+
+  $('opts').addEventListener('click', function(e){
+    var b = e.target.closest('.opt'); if (b) choose(Number(b.getAttribute('data-v')));
+  });
+  $('next').addEventListener('click', goNext);
+  $('prev').addEventListener('click', goPrev);
+  document.addEventListener('keydown', function(e){
+    if (quizEl.hidden || e.target === nameEl) return;
+    if (e.key >= '1' && e.key <= '4') choose(Number(e.key));
+    else if (e.key === 'ArrowLeft') goPrev();
+    else if (e.key === 'ArrowRight' || e.key === 'Enter') goNext();
+  });
+
+  // ----- scoring -----
+  function score(answers){
+    var keyed = ITEMS.map(function(it, i){ var raw = answers[i]; return it.k > 0 ? raw : 5 - raw; });
+    var sums = {}, pct = {}, side = {};
+    ORDER.forEach(function(tr){
+      var idx = []; ITEMS.forEach(function(it, i){ if (it.tr === tr) idx.push(i); });
+      var s = idx.reduce(function(acc, i){ return acc + keyed[i]; }, 0);
+      sums[tr] = s;
+      pct[tr] = Math.round((s - 4) / 12 * 100);
+      var hiN = idx.filter(function(i){ return keyed[i] >= 3; }).length;
+      var loN = idx.length - hiN;
+      side[tr] = pct[tr] > 50 ? 'hi' : pct[tr] < 50 ? 'lo' : (hiN > loN ? 'hi' : 'lo');
+    });
+    var letters = {}, conf = {};
+    ORDER.forEach(function(tr){
+      var T = TRAITS[tr];
+      letters[tr] = side[tr] === 'hi' ? T.hi : T.lo;
+      var d = Math.abs(pct[tr] - 50);
+      conf[tr] = d >= 30 ? '非常明確' : d >= 15 ? '明確' : d >= 5 ? '略偏' : '中線偏 ' + letters[tr];
+    });
+    var type = letters.E + letters.O + letters.A + letters.C;
+    var weakest = ['E','O','A','C'].sort(function(a,b){ return Math.abs(pct[a]-50) - Math.abs(pct[b]-50); })[0];
+    var alt = {}; ORDER.forEach(function(tr){ alt[tr] = letters[tr]; });
+    alt[weakest] = letters[weakest] === TRAITS[weakest].hi ? TRAITS[weakest].lo : TRAITS[weakest].hi;
+    var altType = alt.E + alt.O + alt.A + alt.C;
+    // observations: traits where items disagree
+    var obs = [];
+    ORDER.forEach(function(tr){
+      var idx = []; ITEMS.forEach(function(it, i){ if (it.tr === tr) idx.push(i); });
+      var hi = idx.filter(function(i){ return keyed[i] >= 3; }), lo = idx.filter(function(i){ return keyed[i] <= 2; });
+      var vals = idx.map(function(i){ return keyed[i]; });
+      var spread = Math.max.apply(null, vals) - Math.min.apply(null, vals);
+      if (hi.length && lo.length && (spread >= 2 || Math.min(hi.length, lo.length) >= 2)) {
+        var lab = function(i){ return answers[i] >= 3 ? ITEMS[i].a : ITEMS[i].d; };
+        var T = TRAITS[tr];
+        var hiName = tr === 'N' ? '情緒起伏' : T.name;
+        obs.push({tr:tr, hiSide:hi.map(lab), loSide:lo.map(lab)});
+      }
+    });
+    return {keyed:keyed, pct:pct, letters:letters, conf:conf, type:type, altType:altType, weakest:weakest, obs:obs};
+  }
+  function level(pct){ return pct <= 33 ? 0 : pct >= 67 ? 2 : 1; }
+  function shownPct(tr, pct){ return tr === 'N' ? 100 - pct : pct; } // 情緒穩定度 = 100 − 情緒起伏
+
+  // ----- result rendering -----
+  function showResult(){
+    var r = score(state.answers);
+    var who = state.name ? esc(state.name) : '你';
+    var identity = r.letters.N;
+    var idConf = r.conf.N;
+    var html = '';
+
+    html += '<div class="type-card">' +
+      '<div class="eyebrow">' + who + ' 最接近的類型</div>' +
+      '<div class="type-letters">' + r.type + '<span class="identity">-' + identity + '</span></div>' +
+      '<p>其次是 <b>' + r.altType + '</b>，因為 ' + TRAITS[r.weakest].hi + '／' + TRAITS[r.weakest].lo + ' 這一組最接近中線。</p>' +
+      '<table><tr><th>字母</th><th>意思</th><th>把握</th></tr>';
+    ['E','O','A','C','N'].forEach(function(tr){
+      var T = TRAITS[tr], L = r.letters[tr];
+      var meaning = L === T.hi ? T.hiM : T.loM;
+      var mid = r.conf[tr].indexOf('中線') === 0;
+      html += '<tr><td class="l">' + (tr === 'N' ? '-' : '') + L + '</td><td>' + meaning + '</td><td class="c"><span class="pill' + (mid ? ' mid' : '') + '">' + r.conf[tr] + '</span></td></tr>';
+    });
+    html += '</table></div>';
+
+    html += '<h2>五大特質</h2><div class="legend"><span><i style="background:var(--accent)"></i>' + who + '</span><span><i style="background:var(--accent2)"></i>' + JUSTIN.name + '</span></div><div class="traits">';
+    ORDER.forEach(function(tr){
+      var T = TRAITS[tr], p = shownPct(tr, r.pct[tr]), jp = shownPct(tr, JUSTIN.pct[tr]);
+      html += '<div class="trait"><span class="trait-name">' + T.name + '<small>' + T.en + '</small></span>' +
+        '<span class="trait-pct">' + p + '%<span class="cmp">' + jp + '%</span></span>' +
+        '<div class="track"><div class="fill" style="width:' + p + '%"></div><div class="fill cmp" style="width:' + jp + '%"></div><div class="mid"></div></div>' +
+        '<p class="trait-desc">' + T.lv[level(p)] + '</p></div>';
+    });
+    html += '</div><p class="note">0% 為最低、100% 為最高、中間的細線是 50%。每項只有 4 題，上下 15% 都在正常誤差內；落在 40% 到 60% 的項目，換個心情再測可能翻面。</p>';
+
+    html += '<div class="cmp-note" id="cmp-note"></div>';
+
+    html += '<h2>' + who + ' 答案裡的內在拉扯</h2>';
+    if (r.obs.length) {
+      html += '<p class="muted">同一項特質裡，有些題目往一邊、有些往另一邊。這些地方通常比四個字母更能描述一個人。</p><ul class="obs">';
+      r.obs.forEach(function(o){
+        var T = TRAITS[o.tr];
+        var label = o.tr === 'N' ? '情緒' : T.name;
+        html += '<li><b>' + label + '</b>：' + o.hiSide.join('、') + '，但同時' + o.loSide.join('、') + '。</li>';
+      });
+      html += '</ul>';
+    } else {
+      html += '<p class="muted">每一項特質裡的四題都指向同一邊，答案很一致。</p>';
+    }
+
+    html += '<div class="actions">' +
+      '<button class="btn primary" type="button" id="copy">複製結果</button>' +
+      '<button class="btn" type="button" id="cmp" aria-pressed="false">和 ' + JUSTIN.name + ' 比較</button>' +
+      '<button class="btn ghost" type="button" id="redo">重新測驗</button></div>';
+
+    html += '<details><summary>作答紀錄</summary><table><tr><th>#</th><th>題目</th><th>作答</th></tr>';
+    ITEMS.forEach(function(it, i){
+      html += '<tr><td class="c">' + (i+1) + '</td><td>' + it.t + '</td><td class="c">' + CHOICES[state.answers[i]-1].l + '</td></tr>';
+    });
+    html += '</table></details>';
+
+    html += '<p class="note">計分：完全不像我 1 分到非常像我 4 分，反向題以 5 減去原始分數；每項 4 題，百分比 = (總分 − 4) ÷ 12。字母對照：外向性高為 E 低為 I，開放性高為 N 低為 S，親和性高為 F 低為 T，盡責性高為 J 低為 P，情緒起伏高為 -T 低為 -A。</p>';
+
+    resultEl.innerHTML = html;
+    quizEl.hidden = true; introEl.hidden = true; resultEl.hidden = false;
+    window.scrollTo({top:0, behavior:'smooth'});
+
+    $('copy').addEventListener('click', function(){ copyText(buildCopy(r)); });
+    $('redo').addEventListener('click', function(){
+      state = {name: state.name, answers: [], idx: 0, done: false}; save();
+      resultEl.classList.remove('compare'); resultEl.hidden = true; introEl.hidden = false; quizEl.hidden = false; renderQuiz();
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+    $('cmp').addEventListener('click', function(){
+      var on = resultEl.classList.toggle('compare');
+      this.setAttribute('aria-pressed', String(on));
+      if (on) renderCompare(r);
+    });
+  }
+
+  function renderCompare(r){
+    var same = [], diff = [];
+    ['E','O','A','C'].forEach(function(tr){
+      var T = TRAITS[tr];
+      if (r.letters[tr] === JUSTIN.letters[tr]) same.push(r.letters[tr]);
+      else diff.push(T.q + '：' + (state.name || '你') + ' 是 ' + r.letters[tr] + '，' + JUSTIN.name + ' 是 ' + JUSTIN.letters[tr]);
+    });
+    var jType = JUSTIN.letters.E + JUSTIN.letters.O + JUSTIN.letters.A + JUSTIN.letters.C;
+    var t = '<b>' + (state.name ? esc(state.name) : '你') + ' ' + r.type + '，' + JUSTIN.name + ' ' + jType + '。</b> ';
+    if (same.length) t += '相同的字母：' + same.join('、') + '。';
+    if (diff.length) t += '不同的地方：' + diff.join('；') + '。';
+    else t += '四個字母完全相同，差別只在每一項的深淺。';
+    var gaps = ORDER.map(function(tr){ return {tr:tr, g:Math.abs(shownPct(tr, r.pct[tr]) - shownPct(tr, JUSTIN.pct[tr]))}; }).sort(function(a,b){ return b.g - a.g; });
+    if (gaps[0].g >= 25) t += ' 分數差最多的是' + TRAITS[gaps[0].tr].name + '，相差 ' + gaps[0].g + ' 個百分點。';
+    $('cmp-note').innerHTML = t;
+  }
+
+  function buildCopy(r){
+    var lines = [];
+    lines.push('人格二十題｜' + (state.name || '未填名字'));
+    lines.push('類型：' + r.type + '-' + r.letters.N + '（其次 ' + r.altType + '）');
+    lines.push(ORDER.map(function(tr){ return TRAITS[tr].name + ' ' + shownPct(tr, r.pct[tr]) + '%'; }).join('｜'));
+    lines.push(['E','O','A','C','N'].map(function(tr){ return (tr === 'N' ? '-' : '') + r.letters[tr] + ' ' + r.conf[tr]; }).join('／'));
+    r.obs.forEach(function(o){
+      var label = o.tr === 'N' ? '情緒' : TRAITS[o.tr].name;
+      lines.push('拉扯・' + label + '：' + o.hiSide.join('、') + '，但同時' + o.loSide.join('、'));
+    });
+    return lines.join('\n');
+  }
+  function copyText(text){
+    var done = function(){ toast('已複製，貼給對方就可以了'); };
+    var fail = function(){ toast('無法自動複製，請手動選取文字'); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function(){ legacyCopy(text) ? done() : fail(); });
+    else legacyCopy(text) ? done() : fail();
+  }
+  function legacyCopy(text){
+    try {
+      var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select();
+      var ok = document.execCommand('copy'); document.body.removeChild(ta); return ok;
+    } catch (e) { return false; }
+  }
+  var toastTimer;
+  function toast(msg){ var t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2200); }
+
+  // boot
+  if (state.done && state.answers.filter(Boolean).length === ITEMS.length) showResult();
+  else { if (state.idx >= ITEMS.length || state.idx < 0) state.idx = 0; renderQuiz(); }
+})();
+</script>
+
+</body>
+</html>
